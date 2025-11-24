@@ -106,7 +106,7 @@
           "id": "scene_1763959163",
           "createdAt": 1763959163.8187258,
           "imageUrl": "/static/media/proj_test_001/scene_1763959163.png",
-          "motion_prompt": "Start with a wide shot showing Alice and the Rabbit on the asteroid, Earth in the background. The camera slowly zooms in on Alice roasting a marshmallow as a spaceship streaks past, leaving stardust. Then pan slightly to the Rabbit consulting his star chart before tilting back to Alice as she toasts the marshmallow.",
+          "motion_prompt": "The camera slowly pans across a small asteroid, revealing Alice and the Rabbit in spacesuits; Alice floats while roasting a marshmallow, and the Rabbit studies a star chart. As they converse, a spaceship streaks past, leaving a shimmering stardust trail, then the camera zooms in on Alice as she successfully toasts her marshmallow.",
           "videoUrl": "/static/media/proj_test_001/scene_1763959163.mp4"
         }
       }
