@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamFactory v2.1 Agent Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .tab.active {
+            color: #667eea;
+            background: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .panel {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '✨';
+            font-size: 1.2em;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        pre {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .review-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border-radius: 15px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .review-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .status-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .image-option {
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .image-option:hover {
+            border-color: #667eea;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .image-option img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-option button {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        input[readonly] {
+            background: #e9ecef;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🎬 DreamFactory v2.1</h1>
+
+    <div class="container">
+        <!-- Load Project Section -->
+        <div
+            style="padding: 20px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border-bottom: 2px solid #e9ecef;">
+            <h3 style="color: #667eea; margin-bottom: 15px; font-size: 1.2em;">📂 Load Existing Project</h3>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <select id="project-selector"
+                    style="flex: 1; padding: 12px; border: 2px solid #e9ecef; border-radius: 10px; font-size: 14px;">
+                    <option value="">-- Select a project --</option>
+                </select>
+                <button onclick="loadSelectedProject()" style="white-space: nowrap;">📥 Load Project</button>
+                <button onclick="refreshProjectList()"
+                    style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); white-space: nowrap;">🔄
+                    Refresh</button>
+            </div>
+            <p id="load-status" class="status-message" style="display:none; margin-top: 10px;"></p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('writer')">📝 Writer</div>
+            <div class="tab" onclick="showTab('artist')">🎨 Artist</div>
+            <div class="tab" onclick="showTab('director')">🎬 Director</div>
+        </div>
+
+        <!-- Writer Panel -->
+        <div id="writer" class="panel active">
+            <h2>Writer Agent (Script)</h2>
+            <label>Project ID:</label>
+            <input type="text" id="writer-project" value="proj_test_001">
+            <label>Topic / Idea:</label>
+            <textarea id="writer-input" rows="3">A cyberpunk detective looking for a lost cat in neon rain.</textarea>
+            <button onclick="testAgent('writer')">Run Writer</button>
+            <pre id="writer-output">Waiting...</pre>
+
+            <!-- Review Section -->
+            <div id="writer-review" class="review-section" style="display:none;">
+                <h3>✏️ Review & Edit Script</h3>
+                <label>Scene ID:</label>
+                <input type="text" id="review-scene-id" readonly>
+
+                <label>Script & Dialogue:</label>
+                <textarea id="review-script" rows="10"></textarea>
+
+                <label>Visual Direction (Visual Prompt):</label>
+                <textarea id="review-visual" rows="5"></textarea>
+
+                <button onclick="updateScene()">💾 Save Changes & Confirm</button>
+                <p id="update-status" class="status-message" style="display:none;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Artist Panel -->
+    <div id="artist" class="panel">
+        <h2>Artist Agent (Image)</h2>
+        <label>Project ID:</label>
+        <input type="text" id="artist-project" value="proj_test_001">
+        <label>Scene ID (from Writer):</label>
+        <input type="text" id="artist-scene" placeholder="scene_...">
+        <label>Visual Prompt (Optional - auto-fetched from DB if empty):</label>
+        <textarea id="artist-input" rows="3" placeholder="Leave empty to auto-fetch from DB"></textarea>
+        <button onclick="testAgent('artist')">Run Artist (Generate Drafts)</button>
+        <pre id="artist-output">Waiting...</pre>
+
+
+        <!-- Image Selection Section -->
+        <div id="artist-selection" class="review-section" style="display:none;">
+            <h3>🖼️ Select an Image</h3>
+            <div id="image-container" class="image-grid"></div>
+            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                <button onclick="regenerateImages()"
+                    style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    🔄 Regenerate Images
+                </button>
+                <button id="confirm-image-btn" onclick="confirmImageSelection()" disabled
+                    style="opacity: 0.5; cursor: not-allowed;">
+                    💾 Save & Confirm
+                </button>
+            </div>
+            <p id="selection-status" class="status-message" style="display:none;"></p>
+        </div>
+    </div>
+
+    <!-- Director Panel -->
+    <div id="director" class="panel">
+        <h2>Director Agent (Video)</h2>
+        <label>Project ID:</label>
+        <input type="text" id="director-project" value="proj_test_001">
+        <label>Scene ID:</label>
+        <input type="text" id="director-scene" placeholder="scene_...">
+        <label>Image URL (from Artist):</label>
+        <input type="text" id="director-image" placeholder="/static/media/..." readonly>
+
+        <!-- Selected Image Preview -->
+        <div id="director-image-preview" style="display:none; margin-top: 15px;">
+            <label>Selected Image:</label>
+            <div style="border: 2px solid #667eea; border-radius: 10px; padding: 10px; background: #f8f9fa;">
+                <img id="director-preview-img" src="" alt="Selected image"
+                    style="width: 100%; max-width: 400px; border-radius: 8px; display: block; margin: 0 auto;">
+            </div>
+        </div>
+
+        <label>Motion Prompt:</label>
+        <textarea id="director-input" rows="3">Camera pans down from the neon sign to the detective.</textarea>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button onclick="generateMotionPrompt()"
+                style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                ✨ Generate Motion Prompt
+            </button>
+            <button onclick="testAgent('director')">🎬 Run Director</button>
+        </div>
+        <pre id="director-output">Waiting...</pre>
+
+        <!-- Video Player Section -->
+        <div id="director-video-section" style="display:none; margin-top: 20px;">
+            <h3 style="color: #667eea;">🎥 Generated Video</h3>
+            <div style="border: 2px solid #667eea; border-radius: 10px; padding: 15px; background: #f8f9fa;">
+                <video id="director-video-player" controls
+                    style="width: 100%; max-width: 600px; border-radius: 8px; display: block; margin: 0 auto;">
+                    <source id="director-video-source" src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p id="director-video-url" style="margin-top: 10px; font-size: 12px; color: #666; text-align: center;">
+                </p>
+            </div>
+        </div>
+    </div>
+
+    </div> <!-- Close container -->
+
+    <script>
+        // Load project list on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            refreshProjectList();
+        });
+
+        async function refreshProjectList() {
+            try {
+                const res = await fetch('/api/projects');
+                const data = await res.json();
+                const selector = document.getElementById('project-selector');
+
+                // Clear existing options except the first one
+                selector.innerHTML = '<option value="">-- Select a project --</option>';
+
+                // Add project options
+                data.projects.forEach(projectId => {
+                    const option = document.createElement('option');
+                    option.value = projectId;
+                    option.textContent = projectId;
+                    selector.appendChild(option);
+                });
+            } catch (e) {
+                console.error('Error loading projects:', e);
+            }
+        }
+
+        async function loadSelectedProject() {
+            const projectId = document.getElementById('project-selector').value;
+            const statusEl = document.getElementById('load-status');
+
+            if (!projectId) {
+                statusEl.style.display = 'block';
+                statusEl.className = 'status-message error';
+                statusEl.textContent = 'Please select a project';
+                return;
+            }
+
+            statusEl.style.display = 'block';
+            statusEl.className = 'status-message';
+            statusEl.textContent = 'Loading project...';
+
+            try {
+                const res = await fetch(`/api/project/${projectId}`);
+                const data = await res.json();
+
+                if (data.error) {
+                    statusEl.className = 'status-message error';
+                    statusEl.textContent = 'Error: ' + data.error;
+                    return;
+                }
+
+                // Populate all tabs with project data
+                populateProjectData(projectId, data);
+
+                statusEl.className = 'status-message success';
+                statusEl.textContent = '✓ Project loaded successfully!';
+
+                // Auto-hide status after 3 seconds
+                setTimeout(() => {
+                    statusEl.style.display = 'none';
+                }, 3000);
+
+            } catch (e) {
+                statusEl.className = 'status-message error';
+                statusEl.textContent = 'Error loading project: ' + e.message;
+            }
+        }
+
+        function populateProjectData(projectId, projectData) {
+            // Set project ID in all tabs
+            document.getElementById('writer-project').value = projectId;
+            document.getElementById('artist-project').value = projectId;
+            document.getElementById('director-project').value = projectId;
+
+            // Get the latest scene (or first scene)
+            const scenes = projectData.scenes || {};
+            const sceneIds = Object.keys(scenes);
+
+            if (sceneIds.length === 0) {
+                console.log('No scenes found in project');
+                return;
+            }
+
+            // Get the most recent scene
+            const sortedScenes = sceneIds.map(id => scenes[id])
+                .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+            const latestScene = sortedScenes[0];
+
+            // Populate Writer tab
+            if (latestScene.script) {
+                document.getElementById('review-scene-id').value = latestScene.id;
+                document.getElementById('review-script').value = latestScene.script;
+                document.getElementById('review-visual').value = latestScene.visual_prompt || '';
+                document.getElementById('writer-review').style.display = 'block';
+            }
+
+            // Populate Artist tab
+            document.getElementById('artist-scene').value = latestScene.id;
+            document.getElementById('artist-input').value = latestScene.visual_prompt || '';
+
+            console.log('Latest scene data:', latestScene);
+            console.log('Image URL:', latestScene.imageUrl);
+
+            // If image exists, show it
+            if (latestScene.imageUrl) {
+                console.log('Showing image in Artist tab');
+                // Hide the initial output section
+                document.getElementById('artist-output').style.display = 'none';
+                // Show image selection section
+                document.getElementById('artist-selection').style.display = 'block';
+
+                // Create a single image option showing the saved image
+                const container = document.getElementById('image-container');
+                container.innerHTML = '';
+
+                const div = document.createElement('div');
+                div.className = 'image-option';
+                div.style.border = '3px solid #667eea';
+                div.style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.4)';
+
+                const img = document.createElement('img');
+                img.src = latestScene.imageUrl;
+                img.alt = 'Saved image';
+                img.onerror = function () {
+                    console.error('Failed to load image:', latestScene.imageUrl);
+                    this.alt = 'Image failed to load';
+                };
+                img.onload = function () {
+                    console.log('Image loaded successfully');
+                };
+
+                const label = document.createElement('p');
+                label.textContent = '✓ Selected Image';
+                label.style.fontWeight = 'bold';
+                label.style.color = '#667eea';
+                label.style.marginTop = '10px';
+                label.style.textAlign = 'center';
+
+                div.appendChild(img);
+                div.appendChild(label);
+                container.appendChild(div);
+
+                // Enable confirm button
+                window.selectedImageUrl = latestScene.imageUrl;
+                const confirmBtn = document.getElementById('confirm-image-btn');
+                if (confirmBtn) {
+                    confirmBtn.disabled = false;
+                    confirmBtn.style.opacity = '1';
+                    confirmBtn.style.cursor = 'pointer';
+                }
+            } else {
+                console.log('No image URL found in scene data');
+            }
+
+            // Populate Director tab
+            document.getElementById('director-scene').value = latestScene.id;
+            if (latestScene.imageUrl) {
+                document.getElementById('director-image').value = latestScene.imageUrl;
+
+                // Show image preview
+                const previewImg = document.getElementById('director-preview-img');
+                const previewSection = document.getElementById('director-image-preview');
+                previewImg.src = latestScene.imageUrl;
+                previewSection.style.display = 'block';
+            }
+
+            // Auto-generate motion prompt from script
+            if (latestScene.script) {
+                const directorInput = document.getElementById('director-input');
+
+                // If motion_prompt exists in DB, use it
+                if (latestScene.motion_prompt) {
+                    directorInput.value = latestScene.motion_prompt;
+                } else {
+                    // Otherwise, extract action descriptions from script
+                    const scriptLines = latestScene.script.split('\n');
+                    const actionLines = scriptLines.filter(line =>
+                        !line.includes(':') && // Not dialogue
+                        line.trim().length > 0 && // Not empty
+                        !line.match(/^(INT\.|EXT\.|FADE)/) // Not scene headers
+                    ).slice(0, 3); // Take first 3 action lines
+
+                    if (actionLines.length > 0) {
+                        directorInput.value = actionLines.join(' ').substring(0, 200) + '...';
+                    } else {
+                        // Fallback: use visual prompt
+                        directorInput.value = latestScene.visual_prompt || 'Camera movement based on scene description';
+                    }
+                }
+            }
+
+            // If there's a video URL, show it in the video player
+            if (latestScene.videoUrl) {
+                showVideo(latestScene.videoUrl);
+            }
+        }
+
+        function showTab(name) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelector(`.tab[onclick="showTab('${name}')"]`).classList.add('active');
+            document.getElementById(name).classList.add('active');
+        }
+
+        async function testAgent(agent) {
+            const output = document.getElementById(`${agent}-output`);
+            output.textContent = "Running...";
+
+            const projectId = document.getElementById(`${agent}-project`).value;
+            const input = document.getElementById(`${agent}-input`).value;
+
+            let body = { project_id: projectId, input_text: input };
+
+            if (agent === 'artist') {
+                body.scene_id = document.getElementById('artist-scene').value;
+            } else if (agent === 'director') {
+                body.scene_id = document.getElementById('director-scene').value;
+                body.image_url = document.getElementById('director-image').value;
+                body.prompt = document.getElementById('director-input').value; // Motion prompt
+
+                // Save motion prompt to DB before running Director
+                const sceneId = body.scene_id;
+                const motionPrompt = body.prompt;
+                if (sceneId && motionPrompt) {
+                    try {
+                        await fetch(`/api/scene/${sceneId}/update`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ project_id: projectId, motion_prompt: motionPrompt })
+                        });
+                    } catch (e) {
+                        console.error('Error saving motion prompt:', e);
+                    }
+                }
+            }
+
+            try {
+                const res = await fetch(`/api/step/${agent}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+                output.textContent = JSON.stringify(data, null, 2);
+
+                // Director specific handling
+                if (agent === 'director') {
+                    if (data.videoUrl) {
+                        showVideo(data.videoUrl);
+                        // Save video URL to DB
+                        const sceneId = document.getElementById('director-scene').value;
+                        const projId = document.getElementById('director-project').value;
+                        await fetch(`/api/scene/${sceneId}/update`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ project_id: projId, videoUrl: data.videoUrl })
+                        });
+                    } else if (data.result) {
+                        const videoUrlMatch = data.result.match(/video.*?:.*?(\/static\/media\/.*?\.mp4|https?:\/\/.*?\.mp4)/i);
+                        if (videoUrlMatch) {
+                            const videoUrl = videoUrlMatch[1];
+                            showVideo(videoUrl);
+                            const sceneId = document.getElementById('director-scene').value;
+                            const projId = document.getElementById('director-project').value;
+                            await fetch(`/api/scene/${sceneId}/update`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ project_id: projId, videoUrl: videoUrl })
+                            });
+                        } else {
+                            // Fallback: reload scene details
+                            const sceneId = document.getElementById('director-scene').value;
+                            const projId = document.getElementById('director-project').value;
+                            fetchSceneDetails(sceneId, projId);
+                        }
+                    } else {
+                        const sceneId = document.getElementById('director-scene').value;
+                        const projId = document.getElementById('director-project').value;
+                        fetchSceneDetails(sceneId, projId);
+                    }
+                }
+
+                // Writer handling
+                if (agent === 'writer' && data.result) {
+                    try {
+                        const match = data.result.match(/ID (scene_\d+)/);
+                        if (match) {
+                            const sceneId = match[1];
+                            document.getElementById('review-scene-id').value = sceneId;
+                            fetchSceneDetails(sceneId, projectId);
+                            document.getElementById('artist-scene').value = sceneId;
+                            document.getElementById('director-scene').value = sceneId;
+                        } else {
+                            console.warn('Could not extract scene ID from writer response');
+                        }
+                    } catch (e) {
+                        console.error('Error parsing writer output', e);
+                    }
+                }
+
+                // Artist handling
+                if (agent === 'artist' && data.result) {
+                    try {
+                        const jsonMatch = data.result.match(/\[.*\]/s);
+                        if (jsonMatch) {
+                            const paths = JSON.parse(jsonMatch[0]);
+                            showImageSelection(paths, projectId);
+                        } else {
+                            console.warn('No JSON list found in artist response');
+                        }
+                    } catch (e) {
+                        console.error('Error parsing artist output', e);
+                    }
+                }
+            } catch (err) {
+                output.textContent = "Error: " + err.message;
+            }
+        }
+
+        function showVideo(videoUrl) {
+            // Hide output, show video player
+            document.getElementById('director-output').style.display = 'none';
+            document.getElementById('director-video-section').style.display = 'block';
+
+            // Set video source
+            const videoPlayer = document.getElementById('director-video-player');
+            const videoSource = document.getElementById('director-video-source');
+            videoSource.src = videoUrl;
+            videoPlayer.load();
+
+            // Show URL
+            document.getElementById('director-video-url').textContent = `Video URL: ${videoUrl}`;
+        }
+
+        function showImageSelection(paths, projectId) {
+            const container = document.getElementById('image-container');
+            container.innerHTML = "";
+            document.getElementById('artist-selection').style.display = "block";
+
+            paths.forEach((path, index) => {
+                const filename = path.split('/').pop();
+                const url = `/static/media/temp/${filename}`;
+
+                const div = document.createElement('div');
+                div.className = 'image-option';
+
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = `Option ${index + 1}`;
+
+                const btn = document.createElement('button');
+                btn.textContent = `✓ Select Option ${index + 1}`;
+                btn.onclick = (e) => selectImage(path, projectId, e);
+
+                div.appendChild(img);
+                div.appendChild(btn);
+                container.appendChild(div);
+            });
+        }
+
+        function regenerateImages() {
+            // Clear current images and re-run Artist
+            document.getElementById('image-container').innerHTML = "";
+            document.getElementById('selection-status').style.display = "none";
+
+            // Disable confirm button
+            const confirmBtn = document.getElementById('confirm-image-btn');
+            confirmBtn.disabled = true;
+            confirmBtn.style.opacity = '0.5';
+            confirmBtn.style.cursor = 'not-allowed';
+
+            // Clear selected image
+            window.selectedImageUrl = null;
+
+            // Re-run the Artist agent
+            testAgent('artist');
+        }
+
+        async function selectImage(path, projectId, event) {
+            const sceneId = document.getElementById('artist-scene').value;
+            const statusEl = document.getElementById('selection-status');
+            statusEl.style.display = "block";
+            statusEl.className = "status-message";
+            statusEl.textContent = "Selecting...";
+
+            try {
+                const res = await fetch(`/api/scene/${sceneId}/image/select`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        project_id: projectId,
+                        image_path: path
+                    })
+                });
+                const data = await res.json();
+
+                if (data.imageUrl) {
+                    statusEl.className = "status-message success";
+                    statusEl.textContent = "✓ Image selected! Click 'Save & Confirm' to proceed.";
+
+                    // Store the selected image URL globally
+                    window.selectedImageUrl = data.imageUrl;
+
+                    // Update Director image field
+                    document.getElementById('director-image').value = data.imageUrl;
+
+                    // Enable the confirm button
+                    const confirmBtn = document.getElementById('confirm-image-btn');
+                    confirmBtn.disabled = false;
+                    confirmBtn.style.opacity = '1';
+                    confirmBtn.style.cursor = 'pointer';
+
+                    // Highlight selected image
+                    document.querySelectorAll('.image-option').forEach(opt => {
+                        opt.style.border = '3px solid #e9ecef';
+                    });
+                    event.target.closest('.image-option').style.border = '3px solid #667eea';
+                    event.target.closest('.image-option').style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.4)';
+                } else {
+                    statusEl.className = "status-message error";
+                    statusEl.textContent = "Error: " + (data.error || "Unknown error");
+                }
+
+            } catch (e) {
+                statusEl.className = "status-message error";
+                statusEl.textContent = "Error selecting: " + e.message;
+            }
+        }
+
+        function confirmImageSelection() {
+            const imageUrl = window.selectedImageUrl;
+            if (!imageUrl) {
+                alert('No image selected');
+                return;
+            }
+
+            // Show image preview in Director tab
+            const previewImg = document.getElementById('director-preview-img');
+            const previewSection = document.getElementById('director-image-preview');
+
+            previewImg.src = imageUrl;
+            previewSection.style.display = 'block';
+
+            // Auto-generate motion prompt
+            const sceneId = document.getElementById('artist-scene').value;
+            const projectId = document.getElementById('artist-project').value;
+            if (sceneId && projectId) {
+                generateMotionPromptAuto(projectId, sceneId);
+            }
+
+            // Switch to Director tab
+            setTimeout(() => {
+                showTab('director');
+            }, 500);
+        }
+
+        async function generateMotionPrompt() {
+            const sceneId = document.getElementById('director-scene').value;
+            const projectId = document.getElementById('director-project').value;
+
+            if (!sceneId || !projectId) {
+                alert('Please load a project first');
+                return;
+            }
+
+            await generateMotionPromptAuto(projectId, sceneId);
+        }
+
+        async function generateMotionPromptAuto(projectId, sceneId) {
+            const directorInput = document.getElementById('director-input');
+            const originalValue = directorInput.value;
+            directorInput.value = 'Generating motion prompt...';
+            directorInput.disabled = true;
+
+            try {
+                const res = await fetch(`/api/scene/${sceneId}/motion-prompt`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        project_id: projectId,
+                        scene_id: sceneId
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.motion_prompt) {
+                    directorInput.value = data.motion_prompt;
+                } else if (data.error) {
+                    directorInput.value = originalValue;
+                    alert('Error generating motion prompt: ' + data.error);
+                }
+            } catch (e) {
+                directorInput.value = originalValue;
+                alert('Error: ' + e.message);
+            } finally {
+                directorInput.disabled = false;
+            }
+        }
+
+        async function fetchSceneDetails(sceneId, projectId) {
+            try {
+                const res = await fetch(`/api/scene/${sceneId}?project_id=${projectId}`);
+                const data = await res.json();
+
+                if (data && !data.error) {
+                    document.getElementById('review-script').value = data.script || "";
+                    document.getElementById('review-visual').value = data.visual_prompt || "";
+                    document.getElementById('writer-review').style.display = "block";
+                }
+            } catch (e) {
+                console.error("Failed to fetch scene details", e);
+            }
+        }
+
+        async function updateScene() {
+            const sceneId = document.getElementById('review-scene-id').value;
+            const projectId = document.getElementById('writer-project').value;
+            const script = document.getElementById('review-script').value;
+            const visualPrompt = document.getElementById('review-visual').value;
+
+            const statusEl = document.getElementById('update-status');
+            statusEl.style.display = "block";
+            statusEl.className = "status-message";
+            statusEl.textContent = "Saving...";
+
+            try {
+                const res = await fetch(`/api/scene/${sceneId}/update`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        project_id: projectId,
+                        script: script,
+                        visual_prompt: visualPrompt
+                    })
+                });
+                const data = await res.json();
+                statusEl.className = "status-message success";
+                statusEl.textContent = "✓ Saved! Switching to Artist tab...";
+
+                // Update Artist input fields for next step
+                document.getElementById('artist-scene').value = sceneId;
+                document.getElementById('artist-project').value = projectId;
+                document.getElementById('artist-input').value = visualPrompt;
+
+                // Also update Director fields
+                document.getElementById('director-scene').value = sceneId;
+                document.getElementById('director-project').value = projectId;
+
+                // Auto-switch to Artist tab after 1 second
+                setTimeout(() => {
+                    showTab('artist');
+                }, 1000);
+
+            } catch (e) {
+                statusEl.className = "status-message error";
+                statusEl.textContent = "Error saving: " + e.message;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

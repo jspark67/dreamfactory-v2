@@ -1,0 +1,267 @@
+{
+  "projects": {
+    "proj_test_001": {
+      "scenes": {
+        "scene_1763909798": {
+          "script": "[SCENE START]\n\n**EXT. ALLEYWAY - NIGHT**\n\nNEON RAIN slicks the grimy alley. The air HUMS with the electricity of overloaded signs. DETECTIVE NEO (30s, trench coat, cybernetic eye glinting) shivers, pulling his collar tighter. He's knee-deep in puddles reflecting the fractured cityscape.\n\n<center>NEO</center>\n> (Muttering)\n> A dame, a cat, and a downpour. Just another Tuesday.\n\nHe shines a flickering flashlight into overflowing bins. The beam catches on a discarded ramen container.\n\n<center>NEO</center>\n> (To himself)\n> Mr. Whiskers. Last seen near the Lucky Dragon Casino. Answers to \"Kitty, Kitty.\" Reward: substantial. My sanity depends on this.\n\nA DATA-BROKER (nervous, twitchy) emerges from the shadows, his face illuminated by the glow of a hacked datapad.\n\n<center>DATA-BROKER</center>\n> You... you the cat finder?\n\n<center>NEO</center>\n> Depends. You seen him? Answers to purrs, sheds like a bio-engineered lab rat, and probably cost more than your entire existence.\n\n<center>DATA-BROKER</center>\n> Maybe. Heard some whispers. Cat matching that description... seen near the docks. District 7. But... word is, he ain't alone.\n\n<center>NEO</center>\n> Alone? With who? Another cat burglar?\n\nThe Data-Broker hesitates, eyes darting nervously.\n\n<center>DATA-BROKER</center>\n> Something... worse. Something hungry.\n\nHe disappears back into the darkness. Neo sighs, adjusts his grip on his weapon, and steps deeper into the rain-soaked alley.\n\n<center>NEO</center>\n> (Under his breath)\n> Hungry, huh? Well, so am I. For answers.\n\n[SCENE END]",
+          "sequence": 3,
+          "visual_prompt": "*   **Setting:** Dark, rain-soaked cyberpunk alleyway. Neon signs reflecting in puddles. Overcrowded and dirty.\n*   **Characters:** Detective Neo - trench coat, cybernetic eye. Data-Broker - shady, nervous.\n*   **Lighting:** Predominantly dark, with strong neon highlights and the beam of Neo's flashlight cutting through the rain.\n*   **Mood:** Gritty, mysterious, slightly ominous.",
+          "rationale": "*   The scene establishes the main quest - finding the cat - while hinting at a larger, more sinister plot.\n*   The Data-Broker introduces a new element of danger, raising the stakes and adding suspense.\n*   Neo's internal monologue and interactions reveal his character and dry wit.\n*   The visual prompt emphasizes the cyberpunk setting and creates a sense of unease.",
+          "status": "completed",
+          "id": "scene_1763909798",
+          "createdAt": 1763909798.54038,
+          "videoUrl": "/static/media/scene_1763909798.mp4",
+          "error": "Invalid URL 'scene_1763909798': No scheme supplied. Perhaps you meant https://scene_1763909798?"
+        },
+        "scene_1763909862": {
+          "characters_involved": [
+            "Detective K",
+            "Bartender"
+          ],
+          "rationale": "This scene introduces a potential lead in the form of \"Rat\" and further establishes the gritty, cynical atmosphere of the cyberpunk world. It also highlights the detective\u2019s persistence despite the unhelpful environment.",
+          "visual_prompt": "Interior of a dimly lit, cyberpunk noodle bar. Rain streaks down the window. A weary detective in a trench coat stands at the counter, talking to a cyborg bartender with glowing blue eyes. A shadowy figure sits in a booth in the background.",
+          "script": "INT. NOODLE BAR - NIGHT\n\nThe noodle bar is cramped and steamy. Rain streaks down the window, blurring the neon signs outside. DETECTIVE K struggles to find a dry spot at the counter. He\u2019s soaked, his trench coat dripping onto the cracked synth-leather.\n\nDETECTIVE K\n(to the bartender, a cyborg with glowing blue eyes)\nI\u2019m looking for a cat. Answers to the name of \"Sparky.\" Got a data chip embedded behind its left ear.\n\nThe bartender wipes down the counter with a rag, unimpressed.\n\nBARTENDER\nCats are bio-waste in this district. You lose one, you get another. Cheaper, too.\n\nDETECTIVE K\nThis one\u2019s\u2026 special. Belongs to a client. Sentimental value. You seen it?\n\nThe bartender glances towards a shadowy booth in the back.\n\nBARTENDER\nMaybe. Talk to Rat. Back booth. But he don\u2019t give up info for free.\n\nDetective K sighs, pulls out a cred chip, and slides it across the counter.\n\nDETECTIVE K\nConsider it\u2026 lubrication.\n\nThe bartender pockets the chip with a metallic click.\n\nBARTENDER\nHe likes synth-sake. Top shelf.\n",
+          "sequence_number": 2,
+          "status": "draft",
+          "id": "scene_1763909862",
+          "createdAt": 1763909862.123616
+        },
+        "scene_1763957353": {
+          "visual_prompt": "Interior of a cluttered, small apartment filled with cat paraphernalia. A cyberpunk detective in a trench coat interviews an elderly woman with purple hair and cat-themed accessories. The lighting is dim, with neon light filtering in from the window.",
+          "script": "INT. CAT LADY'S APARTMENT - NIGHT\n\nThe apartment is cramped, filled with cat trees, scratching posts, and half-empty bowls of kibble. The air is thick with the smell of cat urine and cheap perfume. DETECTIVE K tries to keep his trench coat from brushing against anything. Across from him, MADAME EVELYN, a woman in her late 60s with brightly dyed purple hair and an excessive amount of holographic cat pins on her sweater, wrings her hands.\n\nMADAME EVELYN\n(voice trembling)\nShe's never been gone this long. Mittens always comes back for her supper. Always!\n\nDETECTIVE K\n(grimly)\nWe'll find her, Madame Evelyn. Now, tell me again, did you notice anything unusual before Mittens disappeared?\n\nMADAME EVELYN\n(sniffling)\nJust that... that awful drone. Hovering outside my window. It had these glowing red eyes... like some kind of mechanical devil.\n\nDETECTIVE K\n(eyes narrowing)\nA drone, huh? Did you see any markings? Anything that could identify it?\n\nMADAME EVELYN\n(shaking her head)\nNo, just those eyes. And then... Mittens was gone.\n\nDetective K pulls out his datapad and begins typing.\n\nDETECTIVE K\nI'll put out a call to the precinct. See if anyone spotted a drone matching that description. In the meantime, try to stay calm, Madame Evelyn. And if Mittens comes back...\n\nMADAME EVELYN\n(hopeful)\nYes?\n\nDETECTIVE K\nCall me. Immediately.",
+          "sequence_number": 2,
+          "rationale": "This scene introduces a potential lead - a mysterious drone - and further establishes the emotional stakes of the case. It also provides a glimpse into the cat lady's character and living environment.",
+          "characters_involved": [
+            "Detective K",
+            "Madame Evelyn"
+          ],
+          "status": "draft",
+          "id": "scene_1763957353",
+          "createdAt": 1763957353.2142022
+        },
+        "scene_1763957505": {
+          "visual_prompt": "Dimly lit cyberpunk bar with holographic ads, rain streaking down the window, grizzled detective in a trench coat at the bar, woman with pink hair and cybernetic eyes approaching him",
+          "rationale": "Introduces a new character and a potential lead, while also showing the detective's weary determination. The bar setting provides a classic noir feel.",
+          "script": "INT. BAR - NIGHT\n\nThe bar is dimly lit, holographic advertisements flicker on the walls. Rain streaks down the window. DETECTIVE RAY sits at the bar, nursing a synth-whiskey. He\u2019s a grizzled man in a trench coat, his face etched with weariness.\n\nRAY\n(to the bartender, a chrome-plated robot)\nAny luck?\n\nThe bartender polishes a glass with a mechanical whir.\n\nBARTENDER\nStill nothing, Detective. A lot of lost pets in this city. Mostly cyber-rats.\n\nRay sighs, takes a swig of his drink.\n\nRAY\nThis one\u2019s different. Belongs to a\u2026 friend.\n\nA sultry voice cuts through the noise.\n\nVIOLET (O.S)\nLooking for something, Detective?\n\nRay turns. VIOLET, a woman with bright pink hair and cybernetic eyes, approaches. She wears a tight, shimmering dress.\n\nRAY\nJust my next lead, Violet. You seen a Siamese cat? Answers to the name \"Princess\"?\n\nVIOLET\n(smirking)\nPrincesses are usually expensive, Detective. What\u2019s your friend willing to pay?\n\nRAY\nInformation first. Payment later.\n\nVIOLET\nMaybe I have seen something. Maybe I haven\u2019t. Depends on how good you are at convincing me.\n\nShe leans closer, her cybernetic eye glinting.",
+          "sequence_number": 2,
+          "characters_involved": [
+            "Detective Ray",
+            "Bartender",
+            "Violet"
+          ],
+          "status": "draft",
+          "id": "scene_1763957505",
+          "createdAt": 1763957505.800699
+        },
+        "scene_1763957553": {
+          "visual_prompt": "Dark, cramped cyberpunk apartment. Rain streaks down the window. Detective Ray sits at his desk, illuminated by neon light, a datapad with a cat picture in front of him. A mysterious woman in a shimmering raincoat stands at the open doorway.",
+          "rationale": "This scene introduces a potential new client and hints at a deeper mystery beyond the lost cat. It builds on the noir atmosphere and sets the stage for the next part of the story.",
+          "script": "INT. DETECTIVE\u2019S APARTMENT - NIGHT\n\nThe apartment is small, cluttered, illuminated by the glow of Neon City outside. Rain streaks down the window. DETECTIVE RAY sits at his desk, nursing a synth-whiskey. A half-eaten bowl of ramen sits beside a datapad displaying a blurry picture of a fluffy PERSIAN cat.\n\nRAY (V.O.)\nAnother night, another dead end. This city chews you up and spits you out, even if you\u2019re just looking for a goddamn cat.\n\nA knock at the door. Ray sighs and shuffles to open it. Standing there is a WOMAN in a shimmering raincoat, her face obscured by the shadows of the hallway.\n\nWOMAN\nI heard you were good at finding things, Detective.\n\nRAY\nDepends on what I\u2019m looking for. And who\u2019s paying.\n\nWOMAN\nIt\u2019s\u2026 delicate. Can I come in?",
+          "characters_involved": [
+            "Detective Ray",
+            "Woman"
+          ],
+          "sequence_number": 2,
+          "status": "draft",
+          "id": "scene_1763957553",
+          "createdAt": 1763957553.547464
+        },
+        "scene_1763957758": {
+          "rationale": "This scene provides a lead for the detective and introduces the underbelly of the cyberpunk world.",
+          "sequence_number": 2,
+          "script": "INT. BAR - NIGHT\n\nThe bar is dimly lit, neon signs flicker through the window, casting colorful shadows. RICK, a trench coat-clad detective with a grizzled face, sits at the bar, nursing a synth-whiskey. The bartender, a hulking figure with cybernetic implants, wipes down the counter.\n\nRICK\n(Sighs)\nAnother dead end. This city swallows everything, even a damn cat.\n\nThe bartender grunts in sympathy.\n\nBARTENDER\nHeard a whisper down in the docks. Some lowlifes messing with modified pets. Could be your feline friend ended up in the wrong hands.\n\nRick slams his glass on the counter.\n\nRICK\nDocks, huh? Thanks, pal. You might have just saved Mittens from becoming someone\u2019s cyber-snack.\n\nRick throws some credits on the bar and heads out, disappearing into the neon-lit night.",
+          "characters_involved": [
+            "Rick",
+            "Bartender"
+          ],
+          "visual_prompt": "Dimly lit cyberpunk bar with neon signs, a grizzled detective in a trench coat sits at the bar talking to a cybernetically enhanced bartender",
+          "status": "draft",
+          "id": "scene_1763957758",
+          "createdAt": 1763957758.874688
+        },
+        "scene_1763958097": {
+          "visual_prompt": "Interior of a seedy cyberpunk bar, neon signs reflecting in grimy windows, a detective in a trench coat talking to a bartender with cybernetic implants",
+          "sequence_number": 2,
+          "rationale": "The detective follows a lead to a local bar, gathering information about the cat's possible location. The bartender provides a clue, sending the detective to a more dangerous part of the city.",
+          "script": "INT. BAR - NIGHT\n\nThe bar is dimly lit, neon signs flicker through the grimy windows. Detective K stands at the counter, his trench coat dripping. The BARTENDER, a hulking figure with cybernetic implants, wipes down the counter with a rag.\n\nDETECTIVE K\n(Gravelly voice)\nSeen a cat around? Orange tabby, bio-luminescent collar.\n\nBARTENDER\n(Scoffs)\nA cat? In this district? You new in town, chrome-dick?\n\nDETECTIVE K\nIt's important. Belongs to a kid.\n\nThe Bartender grunts, polishing a glass.\n\nBARTENDER\nMaybe. See a lot of things pass through here. What's it worth to ya?\n\nDetective K slides a cred chip across the counter. The Bartender snatches it, eyes it, then sighs.\n\nBARTENDER\nAlright, alright. Heard some whispers. Cat matching that description was sniffing around the data docks, down by sector 7. Place is crawling with stray bots, though. Good luck finding a flesh-and-blood critter down there.\n\nDETECTIVE K\nSector 7... Thanks.\n\nDetective K turns and heads back out into the neon-soaked streets.",
+          "characters_involved": [
+            "Detective K",
+            "Bartender"
+          ],
+          "status": "image_selected",
+          "id": "scene_1763958097",
+          "createdAt": 1763958097.86363,
+          "imageUrl": "/static/media/proj_test_001/scene_1763958097.png"
+        },
+        "scene_1763959163": {
+          "visual_prompt": "Alice and the Rabbit camping on a small asteroid in space. Alice is roasting a marshmallow. The blue Earth is visible in the background. A spaceship streaks past, leaving a trail of stardust.",
+          "script": "INT. SPACE - NIGHT\n\nALICE (8, wearing a spacesuit slightly too big for her) pokes at a floating marshmallow with a skewer. The RABBIT (in a tiny spacesuit), consults a star chart projected from his pocket watch. The blue Earth hangs in the distance, a serene marble against the black velvet. A sleek, silver SPACESHIP whizzes past, leaving a trail of glittering stardust.\n\nALICE\nIs this marshmallow even cooking? It just keeps spinning.\n\nRABBIT\n(Without looking up)\nPatience, my dear Alice. Space-mallows require a different sort of\u2026temporal heating. Almost there. According to my calculations, we should be able to see the Andromeda galaxy soon, a truly spectacular sight!\n\nAlice sighs, then notices the spaceship.\n\nALICE\nOoh! Look, Rabbit! A spaceship! I wonder where they're going?\n\nRABBIT\n(Peers up, adjusting his spectacles)\nHmm, a Galactic Cruiser, Mark IV. Likely headed for the Kepler-186f colony. A delightful little planet, though their tea is rather weak.\n\nThe Rabbit returns to his star chart. Alice watches the spaceship disappear into the inky blackness.\n\nALICE\nI wish we could go to other planets.\n\nRABBIT\n(Chuckles)\nMy dear Alice, we ARE on another planet! Well, technically, an asteroid. But potato, po-tah-to, wouldn't you say?\n\nAlice grins, finally getting the marshmallow close enough to a small heating element attached to her suit. It begins to toast.\n\nALICE\nAlmost ready!\n\nRABBIT\nExcellent! Just in time for our celestial bedtime story. Tonight, we shall delve into the mysteries of the Crab Nebula!",
+          "rationale": "This scene expands on the initial premise, showing Alice and the Rabbit engaging in a typical camping activity (roasting marshmallows) but in an unusual setting (space). The spaceship introduces a hint of adventure and the desire to explore other planets.",
+          "sequence_number": 2,
+          "characters_involved": [
+            "Alice",
+            "Rabbit"
+          ],
+          "status": "completed",
+          "id": "scene_1763959163",
+          "createdAt": 1763959163.8187258,
+          "imageUrl": "/static/media/proj_test_001/scene_1763959163.png",
+          "motion_prompt": "Start with a wide shot showing Alice and the Rabbit on the asteroid, Earth in the background. The camera slowly zooms in on Alice roasting a marshmallow as a spaceship streaks past, leaving stardust. Then pan slightly to the Rabbit consulting his star chart before tilting back to Alice as she toasts the marshmallow.",
+          "videoUrl": "/static/media/proj_test_001/scene_1763959163.mp4"
+        }
+      }
+    },
+    "project_1763954420285": {
+      "scenes": {
+        "scene_1763954438": {
+          "script": "INT. LUNAR SURFACE - DAY\n\nALICE (10, wearing her blue dress, now slightly torn) stumbles onto the grey, dusty surface. She coughs, waving away a cloud of moondust. The air is thin, making her gasp.\n\nALICE\n(Calling out)\nMr. Rabbit! Wait for me!\n\nAhead, the WHITE RABBIT (wearing his waistcoat and pocket watch, but also a small space helmet) hops with exaggerated, slow-motion bounces. He seems less concerned with time now.\n\nWHITE RABBIT\n(Muffled through the helmet)\nAlmost there! Just a hop, skip, and a low-gravity jump!\n\nAlice tries to run, but each step sends her floating higher than expected. She laughs, a sound that quickly dies in the alien silence.\n\nALICE\nThis isn't like the stories!\n\nThe White Rabbit reaches a large, metallic object \u2013 a discarded LUNAR MODULE, tilted on its side. He fiddles with a hatch.\n\nWHITE RABBIT\nNonsense! All the best adventures have unexpected detours! Now, hurry! Tea time awaits!\n\nHe disappears inside the module. Alice, struggling against the moon's pull, finally reaches the hatch. She peers inside.\n\nINT. LUNAR MODULE - CONTINUOUS\n\nThe module's interior is cramped and dusty, filled with blinking lights and strange equipment. But in the center, a small table is set for tea. A steaming teapot sits beside delicate china cups. The White Rabbit gestures grandly.\n\nWHITE RABBIT\nWelcome to the Lunar Tea Room! Do take a seat.\n\nAlice stares, bewildered, at the improbable scene.\n\nALICE\nBut... how?\n\nWHITE RABBIT\n(Smiling)\nA magician never reveals his secrets! Now, shall we have Earl Grey or Lunar Lavender?\n\nAlice, despite her confusion, manages a small smile. She pulls herself towards the table, ready for tea.\n\nALICE\nLunar Lavender, please.\n\nThe White Rabbit pours the tea. As Alice reaches for a cup, she notices something glinting in the corner of the module. It's a familiar object... her looking glass, the one she fell through.\n\nALICE\nMy mirror!",
+          "rationale": "Alice arrives on the moon and finds the White Rabbit having tea inside a lunar module. The scene introduces a surreal element with the tea party in space and hints at the looking glass playing a continuing role.",
+          "sequence_number": 2,
+          "characters_involved": [
+            "Alice",
+            "White Rabbit"
+          ],
+          "visual_prompt": "Alice on the moon, low gravity, lunar module, tea party inside lunar module with White Rabbit",
+          "status": "completed",
+          "id": "scene_1763954438",
+          "createdAt": 1763954438.0966039,
+          "error": "Traceback (most recent call last):\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 464, in _make_request\n    self._validate_conn(conn)\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 1093, in _validate_conn\n    conn.connect()\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/connection.py\", line 790, in connect\n    sock_and_verified = _ssl_wrap_socket_and_match_hostname(\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/connection.py\", line 969, in _ssl_wrap_socket_and_match_hostname\n    ssl_sock = ssl_wrap_socket(\n               ^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/util/ssl_.py\", line 480, in ssl_wrap_socket\n    ssl_sock = _ssl_wrap_socket_impl(sock, context, tls_in_tls, server_hostname)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/util/ssl_.py\", line 524, in _ssl_wrap_socket_impl\n    return ssl_context.wrap_socket(sock, server_hostname=server_hostname)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/miniconda3/lib/python3.12/ssl.py\", line 455, in wrap_socket\n    return self.sslsocket_class._create(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/miniconda3/lib/python3.12/ssl.py\", line 1042, in _create\n    self.do_handshake()\n  File \"/Users/jspark/miniconda3/lib/python3.12/ssl.py\", line 1320, in do_handshake\n    self._sslobj.do_handshake()\nssl.SSLError: [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1000)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 787, in urlopen\n    response = self._make_request(\n               ^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 488, in _make_request\n    raise new_e\nurllib3.exceptions.SSLError: [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1000)\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/adapters.py\", line 644, in send\n    resp = conn.urlopen(\n           ^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py\", line 841, in urlopen\n    retries = retries.increment(\n              ^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/urllib3/util/retry.py\", line 519, in increment\n    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='dreamfactory.app', port=443): Max retries exceeded with url: /image_scene_1763954438.png (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1000)')))\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/tools/director_tools.py\", line 39, in generate_video_task\n    image_bytes = requests.get(image_url).content\n                  ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/api.py\", line 73, in get\n    return request(\"get\", url, params=params, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/api.py\", line 59, in request\n    return session.request(method=method, url=url, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/sessions.py\", line 589, in request\n    resp = self.send(prep, **send_kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/sessions.py\", line 703, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/adapters.py\", line 675, in send\n    raise SSLError(e, request=request)\nrequests.exceptions.SSLError: HTTPSConnectionPool(host='dreamfactory.app', port=443): Max retries exceeded with url: /image_scene_1763954438.png (Caused by SSLError(SSLError(1, '[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1000)')))\n",
+          "videoUrl": "/static/media/scene_1763954438.mp4"
+        }
+      }
+    },
+    "project_1763955027044": {
+      "scenes": {
+        "scene_1763955049": {
+          "characters_involved": [
+            "Alice",
+            "Rabbit"
+          ],
+          "script": "INT. MOON SURFACE - DAY\n\nDusty, grey landscape. Two figures stand out: A WHITE RABBIT in a waistcoat, checking a large POCKET WATCH. Behind him, slightly out of breath, is ALICE, a young girl in a blue dress.\n\nALICE\n(Panting)\nWait up! Mr. Rabbit, please! Where are you going?\n\nThe Rabbit sighs dramatically, consulting his watch again.\n\nRABBIT\nTerribly late! The Lunar Tea Party waits for no one! And I am already behind schedule due to a certain...pursuer.\n\nALICE\nA tea party? But...how did we get to the moon? One minute I was falling, the next...moon dust?\n\n The Rabbit taps his foot impatiently.\n\nRABBIT\nNo time for explanations! The Queen of Lunar Cakes will have my ears if I'm late.\n\nHe pulls a small TRUMPET from his coat pocket and blows a loud, HONKING sound. In the distance, a bizarre VEHICLE shaped like a TEACUP bounces towards them across the lunar surface.\n\nALICE\nA teacup car? This is even stranger than Wonderland!\n\nRABBIT\n(Waving his arms)\nFaster, faster! They're almost here! Now, are you coming to the tea party or not? But be warned, child, lunar etiquette is VERY strict.\n\nAlice stares at the approaching teacup car, a mixture of fear and excitement on her face.\n\nALICE\n(To herself)\nLunar etiquette...well, how different can it be?\n\nShe takes a deep breath and follows the Rabbit towards the teacup car.",
+          "visual_prompt": "A dusty moon surface with Alice, a young girl in a blue dress, following a White Rabbit in a waistcoat. In the distance, a teacup-shaped vehicle bounces towards them.",
+          "sequence_number": 1,
+          "rationale": "The scene establishes the lunar setting and introduces the concept of a \"Lunar Tea Party.\" It continues Alice's journey into the bizarre, following the rabbit.",
+          "status": "completed",
+          "id": "scene_1763955049",
+          "createdAt": 1763955049.168329,
+          "imageUrl": "/static/media/scene_1763955049.png",
+          "imagePromptRevison": "A dusty moon surface with Alice, a young girl in a blue dress, following a White Rabbit in a waistcoat. In the distance, a teacup-shaped vehicle bounces towards them.",
+          "videoUrl": "/static/media/scene_1763955049.mp4"
+        }
+      }
+    },
+    "project_1763955299246": {
+      "scenes": {
+        "scene_1763955312": {
+          "script": "EXT. MOON - DAY\n\nALICE (8, curious, wearing a blue dress) gasps as she tumbles out of a swirling, glittery portal onto the surface of the MOON. The landscape is a bizarre mix of familiar grey rock and oversized, luminous moon flowers. The air shimmers.\n\nAhead of her, the WHITE RABBIT (nervous, impeccably dressed) checks his pocket watch.\n\nWHITE RABBIT\n(Muttering)\nOh dear, oh dear, I'm dreadfully late! The Lunar Duchess will have my ears!\n\nAlice stares at the rabbit, then at the strange, dreamlike environment.\n\nALICE\nThis isn't Wonderland.\n\nThe White Rabbit hops faster, disappearing behind a giant moon daisy.\n\nALICE\nWait! You can't just leave me here!\n\nAlice cautiously steps forward, her shoes crunching on the moondust. She looks around, a mix of fear and wonder on her face.",
+          "sequence_number": 1,
+          "rationale": "The scene establishes the new setting (the moon) and Alice's arrival. It maintains the dreamlike quality and sets up the immediate goal: Alice chasing the White Rabbit.",
+          "characters_involved": [
+            "Alice",
+            "White Rabbit"
+          ],
+          "visual_prompt": "A young girl, Alice, in a blue dress, stands on the moon. The environment is surreal, with giant, glowing moon flowers and grey rocks. A white rabbit with a pocket watch hops away in the distance.",
+          "status": "completed",
+          "id": "scene_1763955312",
+          "createdAt": 1763955312.3848891,
+          "imageUrl": "/static/media/project_1763955299246/scene_1763955312.png",
+          "imagePromptRevison": "A young girl, Alice, in a blue dress, stands on the moon. The environment is surreal, with giant, glowing moon flowers and grey rocks. A white rabbit with a pocket watch hops away in the distance.",
+          "videoUrl": "/static/media/project_1763955299246/scene_1763955312.mp4"
+        }
+      }
+    },
+    "project_1763955367107": {
+      "scenes": {
+        "scene_1763955377": {
+          "sequence_number": 1,
+          "script": "EXT. LUNAR SURFACE - DAY\n\nALICE, now wearing a space suit that seems a bit too big for her, stumbles across the dusty lunar surface. Craters stretch out in every direction. She squints, trying to spot the WHITE RABBIT.\n\nALICE\n(Calling out, muffled by her helmet)\nMr. Rabbit! Wait up!\n\nAhead, she sees the White Rabbit hopping towards a bizarre structure \u2013 a Victorian-style GARDEN GATE floating impossibly in the moon's low gravity. The Rabbit pauses at the gate, checks his pocket watch, and disappears through it.\n\nAlice rushes forward, tripping slightly in the loose dust. She reaches the gate, hesitates for a moment, and then steps through.\n\nINT. STRANGE GARDEN - CONTINUOUS\n\nAlice finds herself in a lush, vibrant garden, bathed in a soft, ethereal light. Giant, luminous flowers bloom in impossible colors. Strange, buzzing insects flit through the air.\n\nThe White Rabbit is nowhere to be seen.\n\nALICE\n(To herself)\nWhere did he go?\n\nA CATERPILLAR, smoking a hookah, sits on a giant mushroom.\n\nCATERPILLAR\n(Through a cloud of smoke)\nLooking for someone, are we?",
+          "characters_involved": [
+            "Alice",
+            "White Rabbit",
+            "Caterpillar"
+          ],
+          "visual_prompt": "Alice in an oversized spacesuit on the moon, looking at a floating Victorian garden gate. The White Rabbit is disappearing through the gate. Lunar landscape with strange, giant flowers in the background.",
+          "rationale": "This scene establishes the fantastical nature of the moon and sets up the next location, the strange garden. It also introduces the Caterpillar, a key character from Alice in Wonderland.",
+          "status": "completed",
+          "id": "scene_1763955377",
+          "createdAt": 1763955377.095331,
+          "imageUrl": "/static/media/project_1763955367107/scene_1763955377.png",
+          "imagePromptRevison": "Alice in an oversized spacesuit on the moon, looking at a floating Victorian garden gate. The White Rabbit is disappearing through the gate. Lunar landscape with strange, giant flowers in the background.",
+          "videoUrl": "/static/media/project_1763955367107/scene_1763955377.mp4"
+        }
+      }
+    },
+    "project_1763955689264": {
+      "scenes": {
+        "scene_1763955698": {
+          "rationale": "The scene establishes the fantastical setting of the moon and reveals the familiar characters having a tea party. Alice's confusion and the Rabbit's anxiety create intrigue.",
+          "sequence_number": 1,
+          "characters_involved": [
+            "Alice",
+            "Rabbit",
+            "Mad Hatter",
+            "March Hare"
+          ],
+          "visual_prompt": "Alice on the moon, Earth in the background, tea party with Mad Hatter, March Hare, and Rabbit wearing space helmets.",
+          "script": "EXT. MOON - DAY\n\nALICE tumbles out of a shimmering portal onto the dusty surface of the MOON. She coughs, brushing moon dust off her blue dress. The Earth hangs like a giant blue marble in the black sky.\n\nALICE\n(Calling out)\nHello? Mr. Rabbit? Where are you?\n\nA faint trail of fluffy footprints leads towards a bizarre sight: a TEA PARTY set up on the moon. The MAD HATTER, the MARCH HARE, and the RABBIT are all seated around a table laden with teacups and cakes. They wear space helmets.\n\nRABBIT\n(Nervously sipping tea)\nOh dear, oh dear! She's found us, even here!\n\nMAD HATTER\n(Grinning madly)\nMore tea, Alice? It's moon-flavored!\n\nALICE\n(Approaching cautiously)\nWhat is going on? Why are you on the moon?\n\nMARCH HARE\n(Stuffing cake into his mouth)\nHoliday! Couldn't stand the Queen anymore.\n\nThe Rabbit pulls out a pocket watch.\n\nRABBIT\nWe haven't got all day! The lunar cheese souffl\u00e9 will be ready soon!",
+          "status": "completed",
+          "id": "scene_1763955698",
+          "createdAt": 1763955698.2320051,
+          "imageUrl": "/static/media/project_1763955689264/scene_1763955698.png",
+          "imagePromptRevison": "Alice on the moon, Earth in the background, tea party with Mad Hatter, March Hare, and Rabbit wearing space helmets.",
+          "videoUrl": "/static/media/project_1763955689264/scene_1763955698.mp4"
+        }
+      }
+    },
+    "project_1763956207685": {
+      "scenes": {
+        "scene_1763956216": {
+          "characters_involved": [
+            "Alice",
+            "White Rabbit"
+          ],
+          "rationale": "The scene establishes the bizarre setting of the moon and Alice's continued pursuit of the White Rabbit. The glowing crater hints at further strangeness.",
+          "script": "EXT. MOON - DAY\n\nALICE (8, curious) stands on the dusty surface of the moon, looking around in amazement.  She wears her blue dress, slightly torn.  Behind her, a shimmering portal closes.\n\nA WHITE RABBIT (dressed in a waistcoat and carrying a pocket watch) hops away, seemingly unaffected by the low gravity.\n\nALICE\n(Calling out)\nWait!  Mr. Rabbit, wait for me!\n\nAlice takes a bounding step, nearly floating. She giggles, then chases after the rabbit, her movements awkward in the moon's gravity.\n\nThe Rabbit glances back, checks his watch, and hops faster.\n\nALICE\n(Panting)\nWhere are you going?  What's so important?\n\nThe Rabbit disappears behind a large crater. Alice reaches the edge and peers down. Inside the crater glows with an unnatural light.\n\nALICE\nHello?  Is anyone there?\n",
+          "sequence_number": 1,
+          "visual_prompt": "Alice on the moon, chasing a white rabbit. A portal is closing behind her. The rabbit is hopping towards a brightly lit crater.",
+          "status": "generating_video",
+          "id": "scene_1763956216",
+          "createdAt": 1763956216.958996,
+          "error": "Traceback (most recent call last):\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/tools/director_tools.py\", line 44, in generate_video_task\n    image_bytes = requests.get(image_url).content\n                  ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/api.py\", line 73, in get\n    return request(\"get\", url, params=params, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/api.py\", line 59, in request\n    return session.request(method=method, url=url, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/sessions.py\", line 575, in request\n    prep = self.prepare_request(req)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/sessions.py\", line 484, in prepare_request\n    p.prepare(\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/models.py\", line 367, in prepare\n    self.prepare_url(url, params)\n  File \"/Users/jspark/prj/dreamfactory-v2/backend/.venv/lib/python3.12/site-packages/requests/models.py\", line 438, in prepare_url\n    raise MissingSchema(\nrequests.exceptions.MissingSchema: Invalid URL '/Users/jspark/prj/dreamfactory-v2/backend/static/media/temp/12ad58c9-b21e-4265-a894-3b111a083d4d.png': No scheme supplied. Perhaps you meant https:///Users/jspark/prj/dreamfactory-v2/backend/static/media/temp/12ad58c9-b21e-4265-a894-3b111a083d4d.png?\n"
+        }
+      }
+    },
+    "test_proj": {
+      "scenes": {
+        "scene_1763957691": {
+          "characters_involved": [
+            "Detective Ray"
+          ],
+          "sequence_number": 2,
+          "rationale": "The scene builds on the initial setup, showing the detective's persistence and the gritty reality of his job. The robotic rat adds a touch of cyberpunk flavor, and the final meow creates suspense.",
+          "script": "EXT. RAINY ALLEY - NIGHT\n\nRain lashes down, reflecting the neon signs of the city in shimmering puddles. DETECTIVE RAY, trench coat soaked, holds up a datapad, its screen illuminating his grim face. He squints at a picture of a fluffy PERSIAN CAT.\n\nRAY\n(to himself, muttering)\nMittens... damn cat. Rich lady pays good creds.\n\nHe shines a flashlight into overflowing dumpsters, the beam cutting through the downpour. The alley stinks of garbage and stale noodles.\n\nRAY (CONT'D)\nHere, kitty kitty...\n\nA robotic RAT scurries past, its optical sensors glowing red. Ray kicks at it, sending it skittering away.\n\nRAY (CONT'D)\nScram, chrome-rat.\n\nHe sighs, holstering the flashlight. The rain is relentless.\n\nRAY (CONT'D)\nThis city... even the strays are augmented.\n\nSuddenly, a MEOW echoes from the shadows.\n\nRAY (CONT'D)\nMittens?\n\nHe moves deeper into the alley, gun drawn.",
+          "visual_prompt": "Rainy cyberpunk alley at night, overflowing dumpsters, neon reflections, detective in trench coat with datapad and flashlight, robotic rat, shadows",
+          "status": "draft",
+          "id": "scene_1763957691",
+          "createdAt": 1763957691.5360692
+        }
+      }
+    },
+    "test_proj_2": {
+      "scenes": {
+        "scene_1763957726": {
+          "script": "EXT. ALLEY - NIGHT\n\nRain lashes down, each drop illuminated by the fractured neon signs overhead. Detective Kaito, his trench coat plastered to his body, wades through ankle-deep puddles. He holds a datapad in one hand, its screen displaying a blurry image of a fluffy Persian cat.\n\nKAITO\n(Muttering to himself)\nCome on, Snowball. Where are you, you little furball?\n\nHe shines a beam from his optical implant into the darkness, the light cutting through the rain like a digital sword. The alley walls are slick with grime and tagged with layers of graffiti. A stray drone whirs past, its camera eye briefly focusing on Kaito before darting away.\n\nKAITO (CONT\u2019D)\nDamn drones. Always watching.\n\nHe kicks a discarded synth-noodle container. A scrawny rat scurries away.\n\nKAITO (CONT\u2019D)\nHey, rat. See a cat around? White, fluffy, answers to Snowball?\n\nThe rat just stares at him with beady eyes before disappearing into a crack in the wall. Kaito sighs.\n\nKAITO (CONT\u2019D)\nGuess not. Worth a try.\n\nHe continues deeper into the alley, the neon reflections painting his face in shifting colors.",
+          "rationale": "The scene expands the search, showing the gritty environment and Kaito's interaction with it. The rat encounter adds a touch of humor and emphasizes the loneliness of the detective's search.",
+          "sequence_number": 2,
+          "characters_involved": [
+            "Detective Kaito"
+          ],
+          "visual_prompt": "A cyberpunk alley at night, torrential neon rain, Detective Kaito searching with an optical implant beam, blurry image of a white Persian cat on a datapad",
+          "status": "draft",
+          "id": "scene_1763957726",
+          "createdAt": 1763957726.194378
+        }
+      }
+    }
+  }
+}
