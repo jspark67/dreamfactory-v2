@@ -95,6 +95,8 @@ class UpdateSceneRequest(BaseModel):
     project_id: str
     script: str = None
     visual_prompt: str = None
+    motion_prompt: str = None
+    videoUrl: str = None
 
 @app.post("/api/scene/{scene_id}/update")
 async def update_scene_details(scene_id: str, request: UpdateSceneRequest):
@@ -108,6 +110,10 @@ async def update_scene_details(scene_id: str, request: UpdateSceneRequest):
         updates["script"] = request.script
     if request.visual_prompt is not None:
         updates["visual_prompt"] = request.visual_prompt
+    if request.motion_prompt is not None:
+        updates["motion_prompt"] = request.motion_prompt
+    if request.videoUrl is not None:
+        updates["videoUrl"] = request.videoUrl
         
     if not updates:
         return {"message": "No updates provided"}

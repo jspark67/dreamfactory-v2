@@ -650,7 +650,7 @@
                             body: JSON.stringify({ project_id: projId, videoUrl: data.videoUrl })
                         });
                     } else if (data.result) {
-                        const videoUrlMatch = data.result.match(/video.*?:.*?(\/static\/media\/.*?\.mp4|https?:\/\/.*?\.mp4)/i);
+                        const videoUrlMatch = data.result.match(/(?:Video|saved).*?(\/static\/media\/.*?\.mp4|https?:\/\/.*?\.mp4)/i);
                         if (videoUrlMatch) {
                             const videoUrl = videoUrlMatch[1];
                             showVideo(videoUrl);
@@ -901,6 +901,24 @@
                     document.getElementById('review-script').value = data.script || "";
                     document.getElementById('review-visual').value = data.visual_prompt || "";
                     document.getElementById('writer-review').style.display = "block";
+
+                    // Update Director inputs if they are empty or if we are refreshing
+                    if (data.motion_prompt) {
+                        document.getElementById('director-input').value = data.motion_prompt;
+                    }
+                    if (data.imageUrl) {
+                        document.getElementById('director-image').value = data.imageUrl;
+                        // Show image preview in Director tab
+                        const previewImg = document.getElementById('director-preview-img');
+                        const previewSection = document.getElementById('director-image-preview');
+                        previewImg.src = data.imageUrl;
+                        previewSection.style.display = 'block';
+                    }
+
+                    // If video exists, show it
+                    if (data.videoUrl) {
+                        showVideo(data.videoUrl);
+                    }
                 }
             } catch (e) {
                 console.error("Failed to fetch scene details", e);

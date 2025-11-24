@@ -86,15 +86,40 @@ def generate_video_task(project_id: str, scene_id: str, image_url: str, prompt: 
                     else:
                         raise e
             
-            print(f"   ℹ️ Veo Response Type: {type(response)}")
-            
-            # Check if response has candidates (synchronous) or is an operation
-            # Assuming synchronous for now based on error
-            if hasattr(response, 'candidates') and response.candidates:
-                 # Veo 2.0 / 3.1 usually returns candidates with video parts
-                 pass
-            
-            # Try to extract video from candidates
+            # Handle Long Running Operation (LRO)
+            if hasattr(response, 'name') and (not hasattr(response, 'done') or not response.done):
+                print(f"   ⏳ Operation created: {response.name}. Polling for completion...")
+                import time
+                operation_name = response.name
+                
+                while True:
+                    try:
+                        # Pass the operation object itself, not the name string
+                        op = client.operations.get(response)
+                        if op.done:
+                            if op.error:
+                                raise Exception(f"Operation failed: {op.error}")
+                            
+                            print("   ✅ Operation completed.")
+                            # The result is likely in op.result (property) which holds the GenerateVideosResponse
+                            if hasattr(op, 'result'):
+                                response = op.result
+                            else:
+                                # Fallback if result property is missing, maybe op itself is the response wrapper?
+                                # But usually op.result is what we want.
+                                pass
+                            break
+                        
+                        print("   ... still working ...")
+                        time.sleep(5)
+                    except Exception as poll_err:
+                        print(f"   ⚠️ Error during polling: {poll_err}")
+                        raise poll_err
+
+            # Debug: print response type after polling
+            print(f"   ℹ️ Final Response Type: {type(response)}")
+
+            # Try to extract video from candidates (older models)
             video_bytes = None
             if hasattr(response, 'candidates') and response.candidates:
                 for part in response.candidates[0].content.parts:
@@ -104,11 +129,47 @@ def generate_video_task(project_id: str, scene_id: str, image_url: str, prompt: 
                     elif hasattr(part, 'video_metadata'):
                         # Some versions might return metadata
                         pass
+            
+            # Check for generated_videos (Veo 3.1 / Gemini 2.0 Flash Exp style)
+            if not video_bytes and hasattr(response, 'generated_videos') and response.generated_videos:
+                print(f"   Debug - generated_videos found: {len(response.generated_videos)} items")
+                first_video = response.generated_videos[0]
+                
+                if hasattr(first_video, 'video') and first_video.video:
+                    vid = first_video.video
+                    print(f"   Debug - video object: {vid}")
+                    if hasattr(vid, 'video_bytes') and vid.video_bytes:
+                        video_bytes = vid.video_bytes
+                        print("   ✅ Found video_bytes in generated_videos[0].video")
+                    elif hasattr(vid, 'uri') and vid.uri:
+                        print(f"   ℹ️ Found video URI: {vid.uri}")
+                        # If it's a URI, we might need to download it
+                        try:
+                            video_bytes = requests.get(vid.uri).content
+                            print(f"   ✅ Downloaded video from URI ({len(video_bytes)} bytes)")
+                        except Exception as dl_err:
+                            print(f"   ❌ Failed to download video from URI: {dl_err}")
+                    else:
+                        print("   ⚠️ Video object exists but has no bytes or URI")
+                else:
+                     print(f"   Debug - first_video has no 'video' attribute or it is None. Dir: {dir(first_video)}")
+            
+            # Also check if response itself has video bytes (some SDK versions)
+            if not video_bytes and hasattr(response, 'video') and response.video:
+                 video_bytes = response.video
+            
+            # Also check if response itself has video bytes (some SDK versions)
+            if not video_bytes and hasattr(response, 'video') and response.video:
+                 video_bytes = response.video
 
             if video_bytes:
                  print(f"   ✅ Video generated via Veo! ({len(video_bytes)} bytes)")
             else:
                  print("   ⚠️ No video bytes found in Veo response. Falling back.")
+                 # Debug: print available attributes
+                 print(f"   Debug - Response attributes: {dir(response)}")
+                 if hasattr(response, 'candidates') and response.candidates:
+                     print(f"   Debug - Candidate 0 parts: {response.candidates[0].content.parts}")
                  raise ValueError("No video content in response")
 
                 
