@@ -40,7 +40,7 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
                     />
                 </div>
 
-                {steps.map((step, index) => {
+                {steps.map((step) => {
                     const status = getStepStatus(step.id);
                     return (
                         <div

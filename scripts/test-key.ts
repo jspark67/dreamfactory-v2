@@ -28,8 +28,9 @@ async function testKey() {
         const result = await model.generateContent("Hello");
         console.log("✅ 'gemini-pro' worked! Response:", result.response.text());
 
-    } catch (error: any) {
-        console.error("❌ 'gemini-pro' Failed:", error.message);
+    } catch (error) {
+        const message = error instanceof Error ? error.message : "Unknown error";
+        console.error("❌ 'gemini-pro' Failed:", message);
         console.error("Full Error:", JSON.stringify(error, null, 2));
     }
 }

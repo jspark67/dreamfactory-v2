@@ -89,7 +89,7 @@ export async function generateScript(input: WriterInput): Promise<WriterOutput> 
         generationConfig: {
             responseMimeType: "application/json",
             responseSchema: schema,
-            // @ts-ignore - thinking_level is a preview feature not yet in official types
+            // @ts-expect-error - thinking_level is a preview feature not yet in official types
             // thinking_level: "high",
         },
         systemInstruction: WRITER_SYSTEM_PROMPT,

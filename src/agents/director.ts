@@ -65,7 +65,7 @@ async function urlToPart(url: string) {
  */
 async function generateVideoVeo(input: DirectorInput): Promise<string> {
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || "");
-    // Note: using 'any' for model as video generation specific types might be in preview
+    // @ts-expect-error video generation model types may be preview-only
     const model = genAI.getGenerativeModel({ model: "veo-3.1" });
 
     const imagePart = await urlToPart(input.imageUrl);
@@ -79,19 +79,14 @@ async function generateVideoVeo(input: DirectorInput): Promise<string> {
   `;
 
     try {
-        // @ts-ignore - generateContent with this specific payload might not be fully typed yet
+        // @ts-expect-error generateContent payload for Veo is preview-only
         const result = await model.generateContent([fullPrompt, imagePart]);
-        const response = result.response;
+        const response = result.response as { videos?: Array<{ url?: string; uri?: string }> };
 
-        // Placeholder for actual extraction logic:
-        // Assuming the response contains the video URL or data
-        const videos = (response as any).videos; // Adjust based on actual API
-        if (videos && videos.length > 0) {
+        const videos = response?.videos ?? [];
+        if (videos.length > 0) {
             return videos[0].url || videos[0].uri;
         }
-
-        // If the API returns inline data (base64), we would handle it here.
-        // For now, assuming URL.
 
         throw new Error("No video returned from generation model.");
     } catch (error) {
@@ -103,7 +98,7 @@ async function generateVideoVeo(input: DirectorInput): Promise<string> {
 /**
  * Generates a fallback composition (Ken Burns effect) for Remotion.
  */
-function generateVideoFallback(input: DirectorInput): DirectorOutput {
+function generateVideoFallback(): DirectorOutput {
     console.log("Generating fallback video composition...");
     return {
         videoComposition: {
@@ -126,6 +121,6 @@ export async function generateSceneVideo(input: DirectorInput): Promise<Director
         return { videoUrl };
     } catch (error) {
         console.warn("Veo generation failed. Switching to fallback.", error);
-        return generateVideoFallback(input);
+        return generateVideoFallback();
     }
 }

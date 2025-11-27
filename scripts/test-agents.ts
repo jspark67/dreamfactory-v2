@@ -51,7 +51,7 @@ async function testAgents() {
         console.log("Scenes generated:", scriptOutput.scenes.length);
         console.log("Global Rationale:", scriptOutput.globalRationale);
         console.log("First Scene Script:", scriptOutput.scenes[0].script);
-    } catch (error) {
+    } catch {
         console.error("❌ Writer Agent Failed (API Error). Using MOCK data to continue test.");
         scriptOutput = {
             scenes: [{

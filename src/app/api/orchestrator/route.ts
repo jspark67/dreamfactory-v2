@@ -1,19 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/firebase/admin';
-import { generateScript, WriterInput } from '@/agents/writer';
-import { generateConsistentImage, ArtistInput } from '@/agents/artist';
-import { generateSceneVideo, DirectorInput } from '@/agents/director';
-
-// --- Interfaces ---
-
-interface OrchestratorRequest {
-    projectId: string;
-    step: 'writing' | 'drawing' | 'directing';
-    input: any; // Specific input type depends on step
-}
 
 // --- Helper: Antigravity Integration (Placeholder) ---
-async function logToAntigravityManager(projectId: string, step: string, status: string, details?: any) {
+async function logToAntigravityManager(projectId: string, step: string, status: string, details?: unknown) {
     // Future: Stream status to Antigravity console
     console.log(`[Antigravity] Project: ${projectId}, Step: ${step}, Status: ${status}`, details);
 }
@@ -22,7 +10,7 @@ async function logToAntigravityManager(projectId: string, step: string, status: 
 
 export async function POST(req: NextRequest) {
     try {
-        const body = await req.json();
+        const body = (await req.json()) as { projectId?: string; topic?: string };
         const { projectId, topic } = body; // Simplified input for full pipeline
 
         if (!projectId || !topic) {
@@ -54,8 +42,9 @@ export async function POST(req: NextRequest) {
         await logToAntigravityManager(projectId, 'full-pipeline', 'DISPATCHED', result);
         return NextResponse.json({ success: true, data: result });
 
-    } catch (error: any) {
+    } catch (error) {
+        const message = error instanceof Error ? error.message : 'Internal Server Error';
         console.error('Orchestrator Error:', error);
-        return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }

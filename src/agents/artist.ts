@@ -20,7 +20,14 @@ export interface ArtistOutput {
 
 // --- Helper Functions ---
 
-async function urlToPart(url: string) {
+type InlinePart = {
+    inlineData: {
+        data: string;
+        mimeType: string;
+    };
+};
+
+async function urlToPart(url: string): Promise<InlinePart> {
     try {
         const response = await fetch(url);
         const buffer = await response.arrayBuffer();
@@ -44,16 +51,17 @@ async function urlToPart(url: string) {
 async function generateImageTool(prompt: string, referenceImageUrls: string[]): Promise<string> {
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || "");
     // Note: using 'any' for model as image generation specific types might be in preview
+    // @ts-expect-error image model types are preview-only
     const model = genAI.getGenerativeModel({ model: "gemini-3-pro-image-preview" });
 
     // Construct payload: Pass reference images as parts of the content
-    const parts: any[] = [{ text: prompt }];
+    const parts: Array<{ text: string } | InlinePart> = [{ text: prompt }];
 
     for (const url of referenceImageUrls) {
         try {
             const imagePart = await urlToPart(url);
             parts.push(imagePart);
-        } catch (e) {
+        } catch {
             console.warn(`Failed to fetch reference image ${url}, skipping.`);
         }
     }
@@ -63,7 +71,7 @@ async function generateImageTool(prompt: string, referenceImageUrls: string[]): 
     };
 
     try {
-        // @ts-ignore - generateContent with this specific payload might not be fully typed yet
+        // @ts-expect-error generateContent with this payload may not be fully typed yet
         const result = await model.generateContent(payload);
         const response = result.response;
 
@@ -79,7 +87,7 @@ async function generateImageTool(prompt: string, referenceImageUrls: string[]): 
 
         // Extract image from candidates
         const candidate = response.candidates?.[0];
-        const part = candidate?.content?.parts?.[0];
+        const part = candidate?.content?.parts?.[0] as InlinePart | undefined;
 
         if (part?.inlineData?.data) {
             const base64Data = part.inlineData.data;
@@ -87,7 +95,6 @@ async function generateImageTool(prompt: string, referenceImageUrls: string[]): 
             return `data:${mimeType};base64,${base64Data}`;
         }
 
-        // Fallback or error
         throw new Error("No image returned from generation model.");
 
     } catch (error) {

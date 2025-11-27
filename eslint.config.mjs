@@ -3,11 +3,19 @@ import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
 const eslintConfig = defineConfig([
+  {
+    ignores: [
+      "backend/.venv/**",
+      "veo-studio/dist/**",
+      "veo-studio/node_modules/**",
+      "veo-studio/.vite/**",
+      "veo-studio/src/**",
+      "venv/**",
+    ],
+  },
   ...nextVitals,
   ...nextTs,
-  // Override default ignores of eslint-config-next.
   globalIgnores([
-    // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",

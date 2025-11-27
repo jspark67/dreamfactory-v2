@@ -1,22 +1,65 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
-import { CollaborationProvider, useCollaboration, SceneWithState } from "@/providers/CollaborationProvider";
+import { CollaborationProvider, useCollaboration } from "@/providers/CollaborationProvider";
 import { MoviePlayer } from "@/components/preview/MoviePlayer";
-import { Loader2, Play, Image as ImageIcon, Video, PenTool } from "lucide-react";
+import { AspectRatio, GenerationMode, Resolution, VeoModel, GenerateVideoParams } from "@/types/flow";
+import { ChevronRight, Loader2, Menu, Pencil, Search } from "lucide-react";
+import PromptForm from "@/components/PromptForm";
 
-// --- Inner Component to access Context ---
+import Link from "next/link";
+
+type Mode = "video" | "image";
 
 const WorkspaceContent = ({ projectId }: { projectId: string }) => {
-    const { scenes, loading, updateScene } = useCollaboration();
+    const { scenes, loading } = useCollaboration();
     const [activeSceneId, setActiveSceneId] = useState<string | null>(null);
-    const [isProcessing, setIsProcessing] = useState(false);
+    const [mode, setMode] = useState<Mode>("video");
+    const [lastParams, setLastParams] = useState<GenerateVideoParams | null>(null);
 
-    const activeScene = scenes.find((s) => s.sceneId === activeSceneId) || scenes[0];
+    const defaultProjectName = useMemo(() => {
+        const now = new Date();
+        const date = now.toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+        });
+        const time = now.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+        });
+        return `${date} - ${time}`;
+    }, []);
+    const [projectName, setProjectName] = useState<string>(defaultProjectName);
+    const [isEditingName, setIsEditingName] = useState<boolean>(false);
 
-    const handleGenerate = async (step: "writing" | "drawing" | "directing", input: any) => {
-        setIsProcessing(true);
+    // Sync project name from localStorage on mount
+    React.useEffect(() => {
+        if (typeof window === "undefined") return;
+        try {
+            const saved = window.localStorage.getItem("df-projects");
+            if (saved) {
+                const parsed = JSON.parse(saved) as { id: string; title: string }[];
+                const found = parsed.find((p) => p.id === projectId);
+                if (found) {
+                    setProjectName(found.title);
+                }
+            }
+        } catch (e) {
+            console.error("Failed to load project name", e);
+        }
+    }, [projectId]);
+
+    const activeScene = useMemo(
+        () => scenes.find((s) => s.sceneId === activeSceneId) || scenes[0],
+        [activeSceneId, scenes]
+    );
+
+    const handleGenerate = async (
+        step: "writing" | "drawing" | "directing",
+        input: Record<string, unknown>
+    ) => {
         try {
             const response = await fetch("/api/orchestrator", {
                 method: "POST",
@@ -25,153 +68,207 @@ const WorkspaceContent = ({ projectId }: { projectId: string }) => {
             });
             const data = await response.json();
             if (!data.success) throw new Error(data.error);
-            // Firestore listener will update the UI automatically
         } catch (error) {
             console.error("Generation failed:", error);
             alert("Generation failed. Check console.");
-        } finally {
-            setIsProcessing(false);
         }
     };
+
+    const handlePromptFormSubmit = (params: GenerateVideoParams) => {
+        setLastParams(params);
+        if (params.mode === GenerationMode.TEXT_TO_IMAGE) {
+            setMode("image");
+            handleGenerate("drawing", {
+                visualPrompt: params.prompt,
+                referenceImageUrls: params.referenceImages?.map((img) => img.base64) || [],
+                sceneId: activeScene?.sceneId,
+                mode: params.mode,
+                model: params.model,
+                aspectRatio: params.aspectRatio,
+                resolution: params.resolution,
+            });
+        } else {
+            setMode("video");
+            handleGenerate("directing", {
+                imageUrl: activeScene?.imageUrl,
+                script: activeScene?.script,
+                visualPrompt: params.prompt,
+                sceneId: activeScene?.sceneId,
+                mode: params.mode,
+                model: params.model,
+                aspectRatio: params.aspectRatio,
+                resolution: params.resolution,
+                inputVideo: params.inputVideo,
+                startFrame: params.startFrame,
+                endFrame: params.endFrame,
+                isLooping: params.isLooping,
+            });
+        }
+    };
+
+    const handleRetryVideo = () => {
+        if (lastParams) {
+            handlePromptFormSubmit(lastParams);
+        } else if (activeScene) {
+            handleGenerate("directing", {
+                imageUrl: activeScene.imageUrl,
+                script: activeScene.script,
+                visualPrompt: activeScene.visualPrompt,
+                sceneId: activeScene.sceneId,
+                mode: GenerationMode.TEXT_TO_VIDEO,
+                model: VeoModel.VEO_FAST,
+                aspectRatio: AspectRatio.LANDSCAPE,
+                resolution: Resolution.P720,
+            });
+        }
+    };
+
+    const videoModelLabel =
+        lastParams?.model === VeoModel.VEO ? "Veo 3.1" : "Veo 3.1 - Fast";
 
     if (loading) {
         return <div className="flex h-screen items-center justify-center bg-black text-white"><Loader2 className="animate-spin mr-2" /> Loading Workspace...</div>;
     }
 
     return (
-        <div className="flex h-screen bg-neutral-900 text-white overflow-hidden font-sans">
-            {/* Left Panel: Editor */}
-            <div className="w-1/2 flex flex-col border-r border-neutral-800">
-                <header className="h-14 border-b border-neutral-800 flex items-center px-4 justify-between bg-neutral-950">
-                    <h1 className="font-bold text-lg tracking-tight">DreamFactory <span className="text-xs font-normal text-neutral-500">v2.0</span></h1>
-                    <div className="flex items-center space-x-2">
-                        {/* Mock Presence Avatars */}
-                        <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-neutral-900 flex items-center justify-center text-xs">JS</div>
-                        <div className="w-8 h-8 rounded-full bg-purple-500 border-2 border-neutral-900 flex items-center justify-center text-xs">AI</div>
+        <div className="relative min-h-screen bg-black text-white">
+            <div className="mx-auto flex max-w-5xl flex-col gap-6 px-6 pb-32 pt-8">
+                <header className="flex flex-wrap items-center justify-between gap-3 text-sm text-white/70">
+                    <div className="flex flex-wrap items-center gap-3">
+                        <Link href="/dashboard" className="text-white/60 hover:text-white transition-colors">
+                            DreamFactory
+                        </Link>
+                        <ChevronRight className="h-4 w-4 text-white/40" />
+                        <div className="flex items-center gap-2 rounded-full bg-white/5 px-3 py-1.5">
+                            {isEditingName ? (
+                                <input
+                                    autoFocus
+                                    value={projectName}
+                                    onChange={(e) => setProjectName(e.target.value || defaultProjectName)}
+                                    onBlur={() => setIsEditingName(false)}
+                                    className="bg-transparent text-base font-semibold text-white outline-none"
+                                    aria-label="Project name"
+                                />
+                            ) : (
+                                <span className="text-base font-semibold text-white">{projectName}</span>
+                            )}
+                            <button
+                                type="button"
+                                onClick={() => setIsEditingName(true)}
+                                className="rounded-full p-1 hover:bg-white/10"
+                                aria-label="프로젝트 수정"
+                                title="프로젝트 수정"
+                            >
+                                <Pencil className="h-4 w-4 text-white/60" />
+                            </button>
+                        </div>
+                        <ChevronRight className="h-4 w-4 text-white/40" />
+                        <span className="text-white/50">장면 빌더</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <button className="hidden items-center gap-2 rounded-full bg-white/5 px-3 py-2 text-xs text-white/60 sm:flex">
+                            <span className="text-white/50">클립 검색</span>
+                            <Search className="h-4 w-4" />
+                        </button>
+                        <button aria-label="Menu" className="rounded-full p-2 hover:bg-white/10">
+                            <Menu className="h-4 w-4" />
+                        </button>
+                        <div className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-1">
+                            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                            <span className="text-xs">Live</span>
+                        </div>
                     </div>
                 </header>
 
-                <div className="flex-1 overflow-y-auto p-6 space-y-8">
-                    {/* Project Level Controls (Mock) */}
-                    <div className="bg-neutral-800/50 p-4 rounded-lg border border-neutral-700">
-                        <h2 className="text-sm font-semibold mb-2 text-neutral-400 uppercase tracking-wider">Writer Agent</h2>
-                        <div className="flex gap-2">
-                            <button
-                                onClick={() => handleGenerate('writing', {
-                                    topic: "Cyberpunk detective in rain",
-                                    productionBible: {
-                                        genre: "Cyberpunk",
-                                        tone: "Dark",
-                                        visualStyle: "Neon Noir",
-                                        characters: {}
-                                    }
-                                })}
-                                disabled={isProcessing}
-                                className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-sm font-medium flex items-center disabled:opacity-50"
-                            >
-                                {isProcessing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <PenTool className="w-4 h-4 mr-2" />}
-                                Generate Script
-                            </button>
+                <div className="flex flex-wrap items-center gap-3 text-sm text-white/70">
+                    <div className="flex overflow-hidden rounded-full border border-white/10 bg-white/5">
+                        <button
+                            onClick={() => setMode("video")}
+                            className={`px-4 py-2 ${mode === "video" ? "bg-white/20 text-white" : "text-white/70"}`}
+                        >
+                            Videos
+                        </button>
+                        <button
+                            onClick={() => setMode("image")}
+                            className={`px-4 py-2 ${mode === "image" ? "bg-white/20 text-white" : "text-white/70"}`}
+                        >
+                            Images
+                        </button>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0f0f0f]">
+                        <div className="relative">
+                            {activeScene ? (
+                                <MoviePlayer scene={activeScene} />
+                            ) : (
+                                <div className="flex aspect-video flex-col items-center justify-center gap-4 text-white/40">
+                                    <div className="rounded-full bg-white/5 p-4">
+                                        <Search className="h-8 w-8 opacity-50" />
+                                    </div>
+                                    <p>시작하려면 프롬프트 상자에 입력하세요.</p>
+                                </div>
+                            )}
+                            <div className="absolute right-4 bottom-4 flex items-center gap-2 text-xs">
+                                <span className="rounded-full bg-black/70 px-3 py-1 text-white/80">{videoModelLabel}</span>
+                                <button
+                                    aria-label="Open menu"
+                                    className="rounded-full bg-black/70 p-2 text-white/70 hover:text-white"
+                                    onClick={handleRetryVideo}
+                                >
+                                    …
+                                </button>
+                            </div>
+                        </div>
+                        <div className="px-5 py-4">
+                            <p className="text-sm text-white/70">
+                                {activeScene?.script || activeScene?.visualPrompt || "Give it to me"}
+                            </p>
                         </div>
                     </div>
-
-                    {scenes.map((scene) => (
-                        <div
-                            key={scene.sceneId}
-                            className={`p-4 rounded-xl border transition-all ${activeSceneId === scene.sceneId ? 'border-blue-500 bg-blue-900/10' : 'border-neutral-800 bg-neutral-900 hover:border-neutral-700'}`}
-                            onClick={() => setActiveSceneId(scene.sceneId)}
-                        >
-                            <div className="flex justify-between items-start mb-3">
-                                <span className="text-xs font-mono text-neutral-500">SCENE {scene.sequenceNumber}</span>
-                                <div className="flex space-x-1">
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleGenerate('drawing', {
-                                                visualPrompt: scene.visualPrompt,
-                                                referenceImageUrls: [], // TODO: Add reference images
-                                                sceneId: scene.sceneId
-                                            });
-                                        }}
-                                        className="p-1.5 hover:bg-neutral-700 rounded text-neutral-400 hover:text-white"
-                                        title="Generate Image"
-                                    >
-                                        <ImageIcon className="w-4 h-4" />
-                                    </button>
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleGenerate('directing', {
-                                                imageUrl: scene.imageUrl,
-                                                script: scene.script,
-                                                visualPrompt: scene.visualPrompt,
-                                                sceneId: scene.sceneId
-                                            });
-                                        }}
-                                        className="p-1.5 hover:bg-neutral-700 rounded text-neutral-400 hover:text-white"
-                                        title="Generate Video"
-                                    >
-                                        <Video className="w-4 h-4" />
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="space-y-3">
-                                <div>
-                                    <label className="block text-xs text-neutral-500 mb-1">Script</label>
-                                    <textarea
-                                        className="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-sm text-neutral-300 focus:border-blue-500 focus:outline-none transition-colors"
-                                        rows={3}
-                                        value={scene.script}
-                                        onChange={(e) => updateScene(scene.sceneId, { script: e.target.value })}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs text-neutral-500 mb-1">Visual Prompt</label>
-                                    <textarea
-                                        className="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-xs text-neutral-400 focus:border-blue-500 focus:outline-none transition-colors"
-                                        rows={2}
-                                        value={scene.visualPrompt}
-                                        onChange={(e) => updateScene(scene.sceneId, { visualPrompt: e.target.value })}
-                                    />
-                                </div>
-                                {scene.rationale && (
-                                    <div className="bg-blue-900/20 border border-blue-900/50 p-2 rounded text-xs text-blue-300">
-                                        <span className="font-semibold">AI Rationale:</span> {scene.rationale}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    ))}
                 </div>
-            </div>
 
-            {/* Right Panel: Preview */}
-            <div className="w-1/2 bg-black flex flex-col">
-                <div className="flex-1 relative">
-                    <MoviePlayer scene={activeScene} />
-                </div>
-                <div className="h-48 border-t border-neutral-800 bg-neutral-900 p-4">
-                    <h3 className="text-xs font-semibold text-neutral-500 mb-2 uppercase tracking-wider">Timeline</h3>
-                    <div className="flex space-x-2 overflow-x-auto pb-2">
-                        {scenes.map(scene => (
-                            <div
+                <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs text-white/60">
+                        <span>씬 선택</span>
+                        <span>총 {scenes.length}개</span>
+                    </div>
+                    <div className="flex gap-2 overflow-x-auto pb-2">
+                        {scenes.map((scene) => (
+                            <button
                                 key={scene.sceneId}
                                 onClick={() => setActiveSceneId(scene.sceneId)}
-                                className={`flex-shrink-0 w-32 h-20 rounded border cursor-pointer overflow-hidden relative ${activeSceneId === scene.sceneId ? 'border-blue-500 ring-1 ring-blue-500' : 'border-neutral-700 opacity-60 hover:opacity-100'}`}
+                                className={`relative h-20 min-w-[120px] overflow-hidden rounded-xl border ${activeSceneId === scene.sceneId
+                                    ? "border-blue-400 ring-1 ring-blue-400/50"
+                                    : "border-white/10 opacity-70 hover:opacity-100"
+                                    }`}
                             >
                                 {scene.imageUrl ? (
                                     // eslint-disable-next-line @next/next/no-img-element
-                                    <img src={scene.imageUrl} alt="" className="w-full h-full object-cover" />
+                                    <img src={scene.imageUrl} alt="" className="h-full w-full object-cover" />
                                 ) : (
-                                    <div className="w-full h-full bg-neutral-800 flex items-center justify-center text-xs text-neutral-600">No Image</div>
+                                    <div className="flex h-full w-full items-center justify-center bg-white/5 text-[11px] text-white/60">
+                                        No Image
+                                    </div>
                                 )}
-                                <div className="absolute bottom-1 right-1 text-[10px] bg-black/70 px-1 rounded text-white">
-                                    {scene.sequenceNumber}
+                                <div className="absolute bottom-1 right-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] text-white">
+                                    {scene.sequenceNumber ?? "-"}
                                 </div>
-                            </div>
+                            </button>
                         ))}
                     </div>
+                </div>
+            </div>
+
+            <div className="fixed inset-x-0 bottom-0 z-20 border-t border-white/10 bg-black/85 backdrop-blur-md">
+                <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-3">
+                    <div className="flex items-center justify-between text-xs text-white/60">
+                        <span className="rounded-full bg-white/10 px-3 py-1 text-white">프롬프트 다이얼로그</span>
+                        <span className="rounded-full bg-white/5 px-3 py-1 text-white/70">{videoModelLabel}</span>
+                    </div>
+                    <PromptForm onGenerate={handlePromptFormSubmit} initialValues={lastParams} />
+                    <p className="text-[11px] text-white/40">Flow는 실수를 할 수 있으니 다시 한번 확인하세요.</p>
                 </div>
             </div>
         </div>

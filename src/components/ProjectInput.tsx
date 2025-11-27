@@ -36,7 +36,7 @@ export const ProjectInput: React.FC<ProjectInputProps> = ({
             {/* Topic Input */}
             <div className="space-y-2">
                 <label htmlFor="topic" className="block text-sm font-medium text-gray-300">
-                    What's your story about?
+                    What&apos;s your story about?
                 </label>
                 <input
                     id="topic"

@@ -2,17 +2,17 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { db } from "@/lib/firebase/client";
-import { collection, onSnapshot, query, orderBy, doc, updateDoc, Timestamp } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, doc, updateDoc } from "firebase/firestore";
 import { Scene } from "@/agents/writer"; // Re-using Scene interface, might need extension
 
 // Extend Scene interface for UI state if needed
 export interface SceneWithState extends Scene {
     imageUrl?: string;
     videoUrl?: string;
-    videoComposition?: any;
+    videoComposition?: unknown;
     status?: string;
     lockedBy?: string;
-    lockedAt?: any;
+    lockedAt?: unknown;
 }
 
 interface CollaborationContextType {
