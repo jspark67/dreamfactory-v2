@@ -59,27 +59,26 @@ async def delegate_to_artist(scene_id: str, visual_prompt: str, project_id: str)
             
     return final_response
 
-async def delegate_to_director(scene_id: str, image_url: str, prompt: str, project_id: str) -> str:
+async def delegate_to_director(scene_id: str, image_url: str, prompt: str, project_id: str, token: str = None) -> str:
     print(f"👨‍💼 Supervisor: Delegating to Director for Scene {scene_id}...")
-    session_service = InMemorySessionService()
-    runner = Runner(agent=director_agent, app_name=APP_NAME, session_service=session_service)
     
-    # Create session first
-    session = await session_service.create_session(
-        app_name=APP_NAME,
-        user_id="system",
-        session_id=scene_id
-    )
+    # Import DirectorAgent class directly to pass token
+    from agents.director import DirectorAgent
     
-    prompt = f"Scene ID: {scene_id}. Image URL: {image_url}. Prompt: {prompt}. Generate video. Project ID: {project_id}"
-    content = types.Content(role='user', parts=[types.Part(text=prompt)])
+    # Create director agent with optional token
+    director_instance = DirectorAgent(api_key=token)
     
-    final_response = ""
-    async for event in runner.run_async(user_id="system", session_id=scene_id, new_message=content):
-        if event.is_final_response():
-            final_response = event.content.parts[0].text
-            
-    return final_response
+    # Use the DirectorAgent's generate_video method directly instead of ADK
+    try:
+        result = director_instance.generate_video(
+            project_id=project_id,
+            scene_id=scene_id,
+            image_url=image_url,
+            prompt=prompt
+        )
+        return f"Video generated successfully. Video URL: {result.get('video_url', 'N/A')}"
+    except Exception as e:
+        return f"Error generating video: {str(e)}"
 
 def get_latest_scene_info(project_id: str) -> dict:
     """

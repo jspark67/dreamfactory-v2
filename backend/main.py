@@ -1,10 +1,11 @@
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import FastAPI, BackgroundTasks, Request, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import os
 import sys
 from dotenv import load_dotenv
+from typing import Optional
 
 # Load environment variables from .env file
 # Load environment variables from .env file
@@ -276,13 +277,20 @@ async def step_artist(request: StepRequest):
         return {"error": str(e)}
 
 @app.post("/api/step/director")
-async def step_director(request: StepRequest):
+async def step_director(request: StepRequest, authorization: Optional[str] = Header(None)):
     try:
         if not request.scene_id or not request.image_url:
             return {"error": "scene_id and image_url required"}
+        
+        # Extract token from Authorization header
+        token = None
+        if authorization and authorization.startswith("Bearer "):
+            token = authorization.replace("Bearer ", "")
+            print(f"Using user OAuth token for Director Agent")
+        
         # Use the explicit prompt field; fallback to input_text if prompt empty
         used_prompt = request.prompt or request.input_text
-        result = await delegate_to_director(request.scene_id, request.image_url, used_prompt, request.project_id)
+        result = await delegate_to_director(request.scene_id, request.image_url, used_prompt, request.project_id, token)
         return {"result": result}
     except Exception as e:
         return {"error": str(e)}

@@ -7,6 +7,7 @@ import {
     ArrowDown,
     ArrowRight,
     Baseline,
+    Check,
     ChevronDown,
     Download,
     Film,
@@ -37,6 +38,10 @@ export const ArrowPathIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
 
 export const DownloadIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <Download {...defaultProps} {...props} />
+);
+
+export const CheckIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <Check {...defaultProps} {...props} />
 );
 
 export const SparklesIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (

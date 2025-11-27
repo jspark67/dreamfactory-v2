@@ -108,6 +108,19 @@
           "imageUrl": "/static/media/proj_test_001/scene_1763959163.png",
           "motion_prompt": "The camera slowly pans across a small asteroid, revealing Alice and the Rabbit in spacesuits; Alice floats while roasting a marshmallow, and the Rabbit studies a star chart. As they converse, a spaceship streaks past, leaving a shimmering stardust trail, then the camera zooms in on Alice as she successfully toasts her marshmallow.",
           "videoUrl": "/static/media/proj_test_001/scene_1763959163.mp4"
+        },
+        "scene_1764006341": {
+          "sequence_number": 2,
+          "rationale": "This scene provides a lead for the detective, introduces a potentially dangerous element (\"collector\"), and reinforces the cyberpunk atmosphere.",
+          "characters_involved": [
+            "Detective K",
+            "Bartender"
+          ],
+          "script": "INT. RICKETY NOODLE BAR - NIGHT\n\nRain streaks down the grime-covered window of a noodle bar. Inside, DETECTIVE K struggles to find a dry spot at the counter. Steam rises from a bowl of synthetic ramen. He gestures to the BARTENDER, a hulking figure with chrome implants.\n\nDETECTIVE K\n(Gravelly voice)\nAnything new on the missing cat? Fluffy? White Persian, cybernetic eye?\n\nThe Bartender wipes down the counter with a rag, avoiding eye contact.\n\nBARTENDER\nHeard some whispers. Tech Row. Down by the docks. Alley cats been disappearing. Something about a \"collector\".\n\nDETECTIVE K\nCollector, huh? Collecting what?\n\nBARTENDER\n(Shrugs)\nParts. Upgrades. Heard they pay good cred for the right kind of enhancements.\n\nDetective K sighs, pulls out a crumpled photo of Fluffy. The cat\u2019s cybernetic eye gleams unnervingly even in the dim light.\n\nDETECTIVE K\nDamn it.\n(He slams some credits on the counter)\nKeep your ears open. Double if you find something concrete.\n\nDetective K heads back out into the rain. The Bartender watches him go, then subtly taps a comm on his wrist.",
+          "visual_prompt": "Dimly lit, rain-streaked noodle bar. Cyberpunk detective at the counter, talking to a hulking bartender with chrome implants. Steam rising from a bowl of noodles. Photo of a white Persian cat with a cybernetic eye on the counter.",
+          "status": "draft",
+          "id": "scene_1764006341",
+          "createdAt": 1764006341.736425
         }
       }
     },
@@ -260,6 +273,23 @@
           "status": "draft",
           "id": "scene_1763957726",
           "createdAt": 1763957726.194378
+        }
+      }
+    },
+    "project_1764010524290": {
+      "scenes": {
+        "scene_1764010534": {
+          "rationale": "This scene introduces the lunar setting and Alice's initial journey into the strange moon world, following the White Rabbit. It establishes the whimsical and slightly absurd tone of the story.",
+          "sequence_number": 1,
+          "visual_prompt": "A young girl, Alice, in a slightly oversized dress, stands on a grey, dusty moon surface. A white rabbit in a waistcoat hops into a shimmering, rainbow-colored crater. The crater walls are made of glowing cheese and Alice is floating upwards surrounded by stardust.",
+          "script": "EXT. LUNAR LANDSCAPE - DAY\n\nALICE (7, curious, wearing a slightly too-big dress) stands on a dusty, grey surface. Before her, the WHITE RABBIT (dapper, anxious) hops towards a shimmering, rainbow-colored crater.\n\nALICE\n(Calling out)\nWait up! You haven't even told me where we're going!\n\nThe White Rabbit glances back, his pocket watch flashing.\n\nWHITE RABBIT\n(Panicked)\nLate! Terribly late! The Lunar Tea Party won't set itself up, you know!\n\nHe disappears into the crater. Alice hesitates for a moment, then peers into the crater. It seems to lead...upwards?\n\nALICE\n(To herself)\nWell, this is new.\n\nShe steps into the crater. Instead of falling, she floats gently upwards, surrounded by swirling stardust. The crater walls are now made of soft, glowing cheese.\n\nALICE\n(Giggles)\nCheese walls! Honestly!\n\nShe continues to float upwards, a look of wonder on her face.",
+          "characters_involved": [
+            "Alice",
+            "White Rabbit"
+          ],
+          "status": "draft",
+          "id": "scene_1764010534",
+          "createdAt": 1764010534.8036711
         }
       }
     }

@@ -1,0 +1,207 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-black text-gray-100;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+
+  /* Premium Gradients - Deevid.ai Style */
+  .gradient-purple-pink {
+    @apply bg-gradient-to-r from-purple-600 via-pink-500 to-pink-600;
+  }
+
+  .gradient-blue-cyan {
+    @apply bg-gradient-to-r from-blue-600 via-cyan-500 to-cyan-400;
+  }
+
+  .gradient-cyan-blue {
+    @apply bg-gradient-to-r from-cyan-500 to-blue-600;
+  }
+
+  .gradient-radial-purple {
+    background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+
+  .gradient-radial-pink {
+    background: radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+
+  .gradient-radial-cyan {
+    background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+
+  /* Gradient Text */
+  .gradient-text-purple-pink {
+    @apply bg-gradient-to-r from-purple-400 via-pink-400 to-pink-500 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-blue-cyan {
+    @apply bg-gradient-to-r from-blue-400 via-cyan-400 to-cyan-500 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-cyan-blue {
+    @apply bg-gradient-to-r from-cyan-400 via-blue-500 to-blue-600 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-rainbow {
+    @apply bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+
+  .glass-strong {
+    @apply bg-white/10 backdrop-blur-2xl border border-white/20;
+  }
+
+  /* Glow Effects */
+  .glow-purple {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+  }
+
+  .glow-pink {
+    box-shadow: 0 0 30px rgba(236, 72, 153, 0.5);
+  }
+
+  .glow-cyan {
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  }
+}
+
+/* Advanced Animations */
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.8);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out;
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}

@@ -1,18 +1,16 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
- */
-import type { Video } from '@google/genai';
+*/
+import { Video } from '@google/genai';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     AspectRatio,
+    GenerateVideoParams,
     GenerationMode,
+    ImageFile,
     Resolution,
     VeoModel,
-} from '../types';
-import type {
-    GenerateVideoParams,
-    ImageFile,
     VideoFile,
 } from '../types';
 import {
@@ -76,7 +74,7 @@ const CustomSelect: React.FC<{
 }> = ({ label, value, onChange, icon, children, disabled = false }) => (
     <div>
         <label
-            className={`text-xs block mb-1.5 font-medium ${disabled ? 'text-gray-400' : 'text-gray-700'
+            className={`text-xs block mb-1.5 font-medium ${disabled ? 'text-gray-500' : 'text-gray-400'
                 }`}>
             {label}
         </label>
@@ -88,11 +86,11 @@ const CustomSelect: React.FC<{
                 value={value}
                 onChange={onChange}
                 disabled={disabled}
-                className="w-full bg-white border border-gray-300 rounded-lg pl-10 pr-8 py-2.5 appearance-none focus:ring-2 focus:ring-black focus:border-black disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-gray-900">
+                className="w-full bg-[#1f1f1f] border border-gray-600 rounded-lg pl-10 pr-8 py-2.5 appearance-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-700/50 disabled:border-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed">
                 {children}
             </select>
             <ChevronDownIcon
-                className={`w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none ${disabled ? 'text-gray-400' : 'text-gray-600'
+                className={`w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none ${disabled ? 'text-gray-600' : 'text-gray-400'
                     }`}
             />
         </div>
@@ -116,6 +114,7 @@ const ImageUpload: React.FC<{
                 console.error('Error converting file:', error);
             }
         }
+        // Reset input value to allow selecting the same file again
         if (inputRef.current) {
             inputRef.current.value = '';
         }
@@ -127,12 +126,12 @@ const ImageUpload: React.FC<{
                 <img
                     src={URL.createObjectURL(image.file)}
                     alt="preview"
-                    className="w-full h-full object-cover rounded-lg border border-gray-200"
+                    className="w-full h-full object-cover rounded-lg"
                 />
                 <button
                     type="button"
                     onClick={onRemove}
-                    className="absolute top-1 right-1 w-6 h-6 bg-black/70 hover:bg-black rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-1 right-1 w-6 h-6 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
                     aria-label="Remove image">
                     <XMarkIcon className="w-4 h-4" />
                 </button>
@@ -144,7 +143,7 @@ const ImageUpload: React.FC<{
         <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="w-28 h-20 bg-gray-50 hover:bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
+            className="w-28 h-20 bg-gray-700/50 hover:bg-gray-700 border-2 border-dashed border-gray-600 rounded-lg flex flex-col items-center justify-center text-gray-400 hover:text-white transition-colors">
             <PlusIcon className="w-6 h-6" />
             <span className="text-xs mt-1">{label}</span>
             <input
@@ -184,12 +183,12 @@ const VideoUpload: React.FC<{
                     src={URL.createObjectURL(video.file)}
                     muted
                     loop
-                    className="w-full h-full object-cover rounded-lg border border-gray-200"
+                    className="w-full h-full object-cover rounded-lg"
                 />
                 <button
                     type="button"
                     onClick={onRemove}
-                    className="absolute top-1 right-1 w-6 h-6 bg-black/70 hover:bg-black rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-1 right-1 w-6 h-6 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
                     aria-label="Remove video">
                     <XMarkIcon className="w-4 h-4" />
                 </button>
@@ -201,7 +200,7 @@ const VideoUpload: React.FC<{
         <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="w-48 h-28 bg-gray-50 hover:bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-600 hover:text-gray-900 transition-colors text-center">
+            className="w-48 h-28 bg-gray-700/50 hover:bg-gray-700 border-2 border-dashed border-gray-600 rounded-lg flex flex-col items-center justify-center text-gray-400 hover:text-white transition-colors text-center">
             <PlusIcon className="w-6 h-6" />
             <span className="text-xs mt-1 px-2">{label}</span>
             <input
@@ -262,6 +261,7 @@ const PromptForm: React.FC<PromptFormProps> = ({
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const modeSelectorRef = useRef<HTMLDivElement>(null);
 
+    // Sync state with initialValues prop when it changes (e.g., for "Extend" or "Try Again")
     useEffect(() => {
         if (initialValues) {
             setPrompt(initialValues.prompt ?? '');
@@ -348,6 +348,7 @@ const PromptForm: React.FC<PromptFormProps> = ({
     const handleSelectMode = (mode: GenerationMode) => {
         setGenerationMode(mode);
         setIsModeSelectorOpen(false);
+        // Reset media when mode changes to avoid confusion
         setStartFrame(null);
         setEndFrame(null);
         setReferenceImages([]);
@@ -375,7 +376,7 @@ const PromptForm: React.FC<PromptFormProps> = ({
     const renderMediaUploads = () => {
         if (generationMode === GenerationMode.FRAMES_TO_VIDEO) {
             return (
-                <div className="mb-3 p-4 bg-gray-50 rounded-xl border border-gray-200 flex flex-col items-center justify-center gap-4">
+                <div className="mb-3 p-4 bg-[#2c2c2e] rounded-xl border border-gray-700 flex flex-col items-center justify-center gap-4">
                     <div className="flex items-center justify-center gap-4">
                         <ImageUpload
                             label="Start Frame"
@@ -402,11 +403,11 @@ const PromptForm: React.FC<PromptFormProps> = ({
                                 type="checkbox"
                                 checked={isLooping}
                                 onChange={(e) => setIsLooping(e.target.checked)}
-                                className="w-4 h-4 text-black bg-white border-gray-300 rounded focus:ring-black focus:ring-offset-white cursor-pointer"
+                                className="w-4 h-4 text-indigo-600 bg-gray-700 border-gray-600 rounded focus:ring-indigo-500 focus:ring-offset-gray-800 cursor-pointer"
                             />
                             <label
                                 htmlFor="loop-video-checkbox"
-                                className="ml-2 text-sm font-medium text-gray-700 cursor-pointer">
+                                className="ml-2 text-sm font-medium text-gray-300 cursor-pointer">
                                 Create a looping video
                             </label>
                         </div>
@@ -416,7 +417,7 @@ const PromptForm: React.FC<PromptFormProps> = ({
         }
         if (generationMode === GenerationMode.REFERENCES_TO_VIDEO) {
             return (
-                <div className="mb-3 p-4 bg-gray-50 rounded-xl border border-gray-200 flex flex-wrap items-center justify-center gap-2">
+                <div className="mb-3 p-4 bg-[#2c2c2e] rounded-xl border border-gray-700 flex flex-wrap items-center justify-center gap-2">
                     {referenceImages.map((img, index) => (
                         <ImageUpload
                             key={index}
@@ -434,12 +435,18 @@ const PromptForm: React.FC<PromptFormProps> = ({
                             onSelect={(img) => setReferenceImages((imgs) => [...imgs, img])}
                         />
                     )}
+                    {/* <ImageUpload
+            label="Style Image"
+            image={styleImage}
+            onSelect={setStyleImage}
+            onRemove={() => setStyleImage(null)}
+          /> */}
                 </div>
             );
         }
         if (generationMode === GenerationMode.EXTEND_VIDEO) {
             return (
-                <div className="mb-3 p-4 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-center gap-4">
+                <div className="mb-3 p-4 bg-[#2c2c2e] rounded-xl border border-gray-700 flex items-center justify-center gap-4">
                     <VideoUpload
                         label={
                             <>
@@ -504,13 +511,13 @@ const PromptForm: React.FC<PromptFormProps> = ({
     return (
         <div className="relative w-full">
             {isSettingsOpen && (
-                <div className="absolute bottom-full left-0 right-0 mb-3 p-4 bg-white rounded-xl border border-gray-200 shadow-xl">
+                <div className="absolute bottom-full left-0 right-0 mb-3 p-4 bg-[#2c2c2e] rounded-xl border border-gray-700 shadow-2xl">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <CustomSelect
                             label="Model"
                             value={model}
                             onChange={(e) => setModel(e.target.value as VeoModel)}
-                            icon={<SparklesIcon className="w-5 h-5 text-gray-600" />}
+                            icon={<SparklesIcon className="w-5 h-5 text-gray-400" />}
                             disabled={isRefMode}>
                             {Object.values(VeoModel).map((modelValue) => (
                                 <option key={modelValue} value={modelValue}>
@@ -522,7 +529,7 @@ const PromptForm: React.FC<PromptFormProps> = ({
                             label="Aspect Ratio"
                             value={aspectRatio}
                             onChange={(e) => setAspectRatio(e.target.value as AspectRatio)}
-                            icon={<RectangleStackIcon className="w-5 h-5 text-gray-600" />}
+                            icon={<RectangleStackIcon className="w-5 h-5 text-gray-400" />}
                             disabled={isRefMode || isExtendMode}>
                             {Object.entries(aspectRatioDisplayNames).map(([key, name]) => (
                                 <option key={key} value={key}>
@@ -535,13 +542,13 @@ const PromptForm: React.FC<PromptFormProps> = ({
                                 label="Resolution"
                                 value={resolution}
                                 onChange={(e) => setResolution(e.target.value as Resolution)}
-                                icon={<TvIcon className="w-5 h-5 text-gray-600" />}
+                                icon={<TvIcon className="w-5 h-5 text-gray-400" />}
                                 disabled={isRefMode || isExtendMode}>
                                 <option value={Resolution.P720}>720p</option>
                                 <option value={Resolution.P1080}>1080p</option>
                             </CustomSelect>
                             {resolution === Resolution.P1080 && (
-                                <p className="text-xs text-amber-600 mt-2">
+                                <p className="text-xs text-yellow-400/80 mt-2">
                                     1080p videos can't be extended.
                                 </p>
                             )}
@@ -551,12 +558,12 @@ const PromptForm: React.FC<PromptFormProps> = ({
             )}
             <form onSubmit={handleSubmit} className="w-full">
                 {renderMediaUploads()}
-                <div className="flex items-end gap-2 bg-white border border-gray-300 rounded-2xl p-2 shadow-sm focus-within:ring-2 focus-within:ring-black focus-within:border-black">
+                <div className="flex items-end gap-2 bg-[#1f1f1f] border border-gray-600 rounded-2xl p-2 shadow-lg focus-within:ring-2 focus-within:ring-indigo-500">
                     <div className="relative" ref={modeSelectorRef}>
                         <button
                             type="button"
                             onClick={() => setIsModeSelectorOpen((prev) => !prev)}
-                            className="flex shrink-0 items-center gap-2 px-3 py-2.5 rounded-lg hover:bg-gray-100 text-gray-700 hover:text-gray-900 transition-colors"
+                            className="flex shrink-0 items-center gap-2 px-3 py-2.5 rounded-lg hover:bg-gray-700 text-gray-300 hover:text-white transition-colors"
                             aria-label="Select generation mode">
                             {modeIcons[generationMode]}
                             <span className="font-medium text-sm whitespace-nowrap">
@@ -564,13 +571,13 @@ const PromptForm: React.FC<PromptFormProps> = ({
                             </span>
                         </button>
                         {isModeSelectorOpen && (
-                            <div className="absolute bottom-full mb-2 w-60 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden z-10">
+                            <div className="absolute bottom-full mb-2 w-60 bg-[#2c2c2e] border border-gray-600 rounded-lg shadow-xl overflow-hidden z-10">
                                 {selectableModes.map((mode) => (
                                     <button
                                         key={mode}
                                         type="button"
                                         onClick={() => handleSelectMode(mode)}
-                                        className={`w-full text-left flex items-center gap-3 p-3 hover:bg-gray-100 ${generationMode === mode ? 'bg-gray-50 text-gray-900 font-medium' : 'text-gray-700'}`}>
+                                        className={`w-full text-left flex items-center gap-3 p-3 hover:bg-indigo-600/50 ${generationMode === mode ? 'bg-indigo-600/30 text-white' : 'text-gray-300'}`}>
                                         {modeIcons[mode]}
                                         <span>{mode}</span>
                                     </button>
@@ -579,26 +586,24 @@ const PromptForm: React.FC<PromptFormProps> = ({
                         )}
                     </div>
                     <textarea
-                        id="video-prompt"
-                        name="videoPrompt"
                         ref={textareaRef}
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         placeholder={promptPlaceholder}
-                        className="flex-grow bg-transparent focus:outline-none resize-none text-base text-gray-900 placeholder-gray-400 max-h-48 py-2"
+                        className="flex-grow bg-transparent focus:outline-none resize-none text-base text-gray-200 placeholder-gray-500 max-h-48 py-2"
                         rows={1}
                     />
                     <button
                         type="button"
                         onClick={() => setIsSettingsOpen((prev) => !prev)}
-                        className={`p-2.5 rounded-full hover:bg-gray-100 ${isSettingsOpen ? 'bg-gray-100 text-gray-900' : 'text-gray-600'}`}
+                        className={`p-2.5 rounded-full hover:bg-gray-700 ${isSettingsOpen ? 'bg-gray-700 text-white' : 'text-gray-300'}`}
                         aria-label="Toggle settings">
                         <SlidersHorizontalIcon className="w-5 h-5" />
                     </button>
                     <div className="relative group">
                         <button
                             type="submit"
-                            className="p-2.5 bg-black rounded-full hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                            className="p-2.5 bg-indigo-600 rounded-full hover:bg-indigo-500 disabled:bg-gray-600 disabled:cursor-not-allowed"
                             aria-label="Generate video"
                             disabled={isSubmitDisabled}>
                             <ArrowRightIcon className="w-5 h-5 text-white" />
@@ -618,7 +623,7 @@ const PromptForm: React.FC<PromptFormProps> = ({
                         href="https://ai.google.dev/gemini-api/docs/pricing#veo-3"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-900 hover:underline font-medium"
+                        className="text-indigo-400 hover:underline"
                     >
                         pricing details
                     </a>

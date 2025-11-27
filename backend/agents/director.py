@@ -1,3 +1,7 @@
+"""
+Director Agent - Video Generation using Veo
+Updated to use refactored veo_service.py and agent_framework.py
+"""
 from google import genai
 from google.genai import types
 import os
@@ -5,91 +9,147 @@ import time
 import requests
 from dotenv import load_dotenv
 from backend.utils.firestore_helpers import upload_to_storage, update_scene
+from backend.services.veo_service import VeoService, GenerationMode
+from backend.services.agent_framework import enhance_motion_prompt
 
 load_dotenv()
 
-class DirectorAgent:
-    def __init__(self):
-        self.client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
-        self.model_name = "veo-2.0-generate-preview-001" # Fallback/Current. Spec says 3.1, using 2.0 as likely available.
 
-    def generate_video(self, project_id: str, scene_id: str, image_url: str, prompt: str):
+class DirectorAgent:
+    """
+    Director Agent for video generation using Veo API.
+    Uses the refactored VeoService for robust video generation.
+    """
+    
+    def __init__(self, api_key: str = None):
         """
-        Generates a video from an image using Veo, polls for completion, and uploads to Storage.
-        Updates Firestore with the result.
+        Initialize Director Agent.
+        
+        Args:
+            api_key: Optional API key or OAuth token. If not provided, uses GOOGLE_API_KEY from env.
+        """
+        self.veo_service = VeoService(api_key=api_key)
+        self.model_name = "veo-3.1-generate-preview"
+    
+    def generate_motion_prompt(self, scene_script: str) -> str:
+        """
+        Generate an enhanced motion prompt from a scene script using the Director Agent.
+        
+        Args:
+            scene_script: The scene script/description
+            
+        Returns:
+            Enhanced cinematic motion prompt
+        """
+        try:
+            print(f"Generating motion prompt for script: {scene_script[:100]}...")
+            enhanced_prompt = enhance_motion_prompt(scene_script)
+            print(f"Enhanced prompt: {enhanced_prompt}")
+            return enhanced_prompt
+        except Exception as e:
+            print(f"Error generating motion prompt: {e}")
+            # Return original script as fallback
+            return scene_script
+    
+    def generate_video(
+        self,
+        project_id: str,
+        scene_id: str,
+        image_url: str,
+        prompt: str,
+        save_to_storage: bool = True
+    ) -> dict:
+        """
+        Generates a video from an image using Veo, polls for completion, and optionally uploads to Storage.
+        
+        Args:
+            project_id: Project ID
+            scene_id: Scene ID
+            image_url: URL of the source image
+            prompt: Motion prompt for video generation
+            save_to_storage: Whether to save to Firebase Storage
+            
+        Returns:
+            Dict with video_url and metadata
         """
         print(f"Starting video generation for scene {scene_id}...")
         
         try:
-            # 1. Download the source image
-            image_response = requests.get(image_url)
-            image_response.raise_for_status()
-            image_bytes = image_response.content
-            
-            # 2. Prepare the request
-            # Note: The exact SDK syntax for Veo might vary. Following the spec's guidance.
-            # Assuming 'types.VideoGenerationReferenceImage' exists or similar.
-            
-            # For now, using a hypothetical structure based on the spec and common patterns
-            # If the SDK doesn't support this exact type yet, we might need to adjust.
-            
-            # Creating a temporary file for the image might be needed if SDK expects file path or specific object
-            
-            operation = self.client.models.generate_videos(
-                model=self.model_name,
+            # Generate video using VeoService
+            result = self.veo_service.generate_video(
                 prompt=prompt,
-                config=types.GenerateVideosConfig(
-                    # This is where we would pass the reference image
-                    # reference_images=[types.VideoGenerationReferenceImage(image=image_bytes, reference_type="asset")] 
-                    # For now, assuming prompt-only or simplified input if image-to-video is complex in this SDK version
-                )
+                model=self.model_name,
+                mode=GenerationMode.FRAMES_TO_VIDEO,
+                image_url=image_url,
+                resolution="720p",
+                aspect_ratio="16:9",
             )
             
-            print(f"Video generation started. Operation name: {operation.name}")
+            video_bytes = result["video_bytes"]
+            video_uri = result["uri"]
             
-            # 3. Polling
-            while not operation.done:
-                print("Waiting for video generation...")
-                time.sleep(10)
-                operation = self.client.operations.get(operation.name) # Refresh operation status
+            print(f"Video generated successfully. Size: {result['size_bytes']} bytes")
             
-            if operation.error:
-                raise RuntimeError(f"Video generation failed: {operation.error}")
-            
-            # 4. Retrieve Result
-            # Assuming the result contains a URI or bytes
-            # In some SDKs, you download the artifact from the operation result
-            
-            video_result = operation.result
-            # This part depends heavily on the actual response structure. 
-            # Assuming we can get bytes or a temporary URL.
-            
-            # Placeholder for saving/uploading logic
-            # video_bytes = video_result.video.bytes 
-            # temp_filename = f"temp_{scene_id}.mp4"
-            # with open(temp_filename, "wb") as f:
-            #     f.write(video_bytes)
+            if save_to_storage:
+                # Save to temporary file
+                temp_filename = f"temp_{scene_id}.mp4"
+                with open(temp_filename, "wb") as f:
+                    f.write(video_bytes)
                 
-            # public_url = upload_to_storage(temp_filename, f"projects/{project_id}/scenes/{scene_id}.mp4")
-            
-            # update_scene(project_id, scene_id, {
-            #     "videoUrl": public_url,
-            #     "status": "completed"
-            # })
-            
-            # os.remove(temp_filename)
-            print(f"Video generated and uploaded for scene {scene_id}")
-
-        except Exception as e:
-            print(f"Error in DirectorAgent: {e}")
-            update_scene(project_id, scene_id, {
-                "status": "error",
-                "videoComposition": { # Fallback
-                    "type": "ken_burns",
-                    "config": {"duration": 5}
+                # Upload to Firebase Storage
+                storage_path = f"projects/{project_id}/scenes/{scene_id}.mp4"
+                public_url = upload_to_storage(temp_filename, storage_path)
+                
+                # Update Firestore
+                update_scene(project_id, scene_id, {
+                    "videoUrl": public_url,
+                    "status": "completed"
+                })
+                
+                # Clean up temp file
+                os.remove(temp_filename)
+                
+                print(f"Video uploaded to: {public_url}")
+                
+                return {
+                    "videoUrl": public_url,
+                    "uri": video_uri,
+                    "size_bytes": result['size_bytes'],
+                    "status": "completed"
                 }
-            })
+            else:
+                # Return video bytes directly (for API response)
+                return {
+                    "video_bytes": video_bytes,
+                    "uri": video_uri,
+                    "size_bytes": result['size_bytes'],
+                    "status": "completed"
+                }
+        
+        except Exception as e:
+            error_message = str(e)
+            print(f"Error in DirectorAgent: {error_message}")
+            
+            if save_to_storage:
+                # Update Firestore with error status
+                update_scene(project_id, scene_id, {
+                    "status": "error",
+                    "error": error_message,
+                    "videoComposition": {  # Fallback
+                        "type": "ken_burns",
+                        "config": {"duration": 5}
+                    }
+                })
+            
+            raise RuntimeError(f"Video generation failed: {error_message}")
+
 
 if __name__ == "__main__":
+    # Test the Director Agent
     agent = DirectorAgent()
-    # agent.generate_video("test_proj", "test_scene", "http://...", "A cinematic shot")
+    
+    # Test motion prompt generation
+    test_script = "A cat eating ramen in a cyberpunk city"
+    enhanced = agent.generate_motion_prompt(test_script)
+    print(f"\nOriginal: {test_script}")
+    print(f"Enhanced: {enhanced}")

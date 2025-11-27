@@ -1,8 +1,11 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
-*/
-import type { Video } from '@google/genai';
+ */
+
+// ============================================================================
+// Existing Types (from original veo-studio)
+// ============================================================================
 
 export enum AppState {
     IDLE,
@@ -54,6 +57,44 @@ export interface GenerateVideoParams {
     referenceImages?: ImageFile[];
     styleImage?: ImageFile | null;
     inputVideo?: VideoFile | null;
-    inputVideoObject?: Video | null;
+    inputVideoObject?: any | null;
     isLooping?: boolean;
+}
+
+// ============================================================================
+// New Types for Multi-Agent Workflow
+// ============================================================================
+
+export type AgentType = 'writer' | 'artist' | 'director';
+
+export interface Project {
+    project_id: string;
+    topic?: string;
+    scenes?: Scene[];
+}
+
+export interface Scene {
+    scene_id: string;
+    project_id: string;
+    script?: string;
+    visual_prompt?: string;
+    image_urls?: string[];
+    selected_image?: string;
+    motion_prompt?: string;
+    videoUrl?: string;
+}
+
+export interface WriterResponse {
+    result: string;
+    scene_id?: string;
+}
+
+export interface ArtistResponse {
+    result: string;
+    image_urls?: string[];
+}
+
+export interface DirectorResponse {
+    result: string;
+    videoUrl?: string;
 }

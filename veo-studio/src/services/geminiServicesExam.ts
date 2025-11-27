@@ -4,14 +4,11 @@
 */
 import {
     GoogleGenAI,
-    VideoGenerationReferenceType,
-} from '@google/genai';
-import type {
     Video,
     VideoGenerationReferenceImage,
+    VideoGenerationReferenceType,
 } from '@google/genai';
-import { GenerationMode } from '../types';
-import type { GenerateVideoParams } from '../types';
+import { GenerateVideoParams, GenerationMode } from '../types';
 
 // Fix: API key is now handled by process.env.API_KEY, so it's removed from parameters.
 export const generateVideo = async (
@@ -20,7 +17,7 @@ export const generateVideo = async (
     console.log('Starting video generation with params:', params);
 
     // Fix: API key must be obtained from process.env.API_KEY as per guidelines.
-    const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
     const config: any = {
         numberOfVideos: 1,
@@ -133,11 +130,11 @@ export const generateVideo = async (
         }
         const videoObject = firstVideo.video;
 
-        const url = decodeURIComponent(videoObject.uri!);
+        const url = decodeURIComponent(videoObject.uri);
         console.log('Fetching video from:', url);
 
         // Fix: The API key for fetching the video must also come from process.env.API_KEY.
-        const res = await fetch(`${url}&key=${import.meta.env.VITE_API_KEY}`);
+        const res = await fetch(`${url}&key=${process.env.API_KEY}`);
 
         if (!res.ok) {
             throw new Error(`Failed to fetch video: ${res.status} ${res.statusText}`);
@@ -152,62 +149,3 @@ export const generateVideo = async (
         throw new Error('No videos generated.');
     }
 };
-
-/**
- * Generate video via backend API instead of direct Veo API call.
- * This provides better security (API key on backend) and uses the refactored Python services.
- */
-export const generateVideoViaBackend = async (
-    params: GenerateVideoParams & { projectId: string; sceneId: string; selectedImage?: string | null; token?: string | null }
-): Promise<{ videoUrl: string; uri: string }> => {
-    console.log('Calling backend API for video generation:', params);
-
-    const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-    };
-
-    if (params.token) {
-        headers['Authorization'] = `Bearer ${params.token}`;
-    }
-
-    const response = await fetch('http://localhost:8000/api/step/director', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({
-            project_id: params.projectId,
-            scene_id: params.sceneId,
-            image_url: params.selectedImage,
-            prompt: params.prompt,
-        }),
-    });
-
-    if (!response.ok) {
-        throw new Error(`Backend API error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-
-    // Extract video URL from response
-    let videoUrl: string | null = null;
-
-    if (data.videoUrl) {
-        videoUrl = data.videoUrl;
-    } else if (data.result) {
-        const videoUrlMatch = data.result.match(
-            /(?:Video|saved).*?(\/static\/media\/.*?\.mp4|https?:\/\/.*?\.mp4)/i
-        );
-        if (videoUrlMatch) {
-            videoUrl = videoUrlMatch[1];
-        }
-    }
-
-    if (!videoUrl) {
-        throw new Error('No video URL found in backend response');
-    }
-
-    return {
-        videoUrl,
-        uri: videoUrl,
-    };
-};
-

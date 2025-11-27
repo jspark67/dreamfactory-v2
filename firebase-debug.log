@@ -16,3 +16,50 @@
 [debug] [2025-11-24T05:28:32.792Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
 [debug] [2025-11-24T05:28:32.885Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
 [debug] [2025-11-24T05:28:32.979Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:08:47.191Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:08:47.197Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:08:58.743Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:08:58.882Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:08:59.003Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:08:59.145Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:09:46.636Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:09:46.640Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:09:57.040Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:09:57.130Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:09:57.386Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:09:57.483Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:11:04.331Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:11:04.556Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-11-27T07:11:41.978Z] ----------------------------------------------------------------------
+[debug] [2025-11-27T07:11:41.979Z] Command:       /Users/jspark/.nvm/versions/node/v20.19.5/bin/node /Users/jspark/.nvm/versions/node/v20.19.5/bin/firebase login --no-localhost
+[debug] [2025-11-27T07:11:41.980Z] CLI Version:   14.26.0
+[debug] [2025-11-27T07:11:41.980Z] Platform:      darwin
+[debug] [2025-11-27T07:11:41.980Z] Node Version:  v20.19.5
+[debug] [2025-11-27T07:11:41.980Z] Time:          Thu Nov 27 2025 16:11:41 GMT+0900 (대한민국 표준시)
+[debug] [2025-11-27T07:11:41.980Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-11-27T07:11:41.981Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[info] i  The Firebase CLI’s MCP server feature can optionally make use of Gemini in Firebase. Learn more about Gemini in Firebase and how it uses your data: https://firebase.google.com/docs/gemini-in-firebase#how-gemini-in-firebase-uses-your-data 
+[debug] [2025-11-27T07:11:42.623Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2025-11-27T07:11:42.623Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[info] 
+[info] i  Firebase optionally collects CLI and Emulator Suite usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not used to identify you. 
+[info] 
+[info] i  To change your preferences at any time, run `firebase logout` and `firebase login` again. 
+[debug] [2025-11-27T07:12:36.812Z] >>> [apiv2][query] POST https://auth.firebase.tools/attest [none]
+[debug] [2025-11-27T07:12:36.812Z] >>> [apiv2][body] POST https://auth.firebase.tools/attest {"session_id":"3be109de-d110-461a-b2ae-b8a341ebd041"}
+[debug] [2025-11-27T07:12:37.480Z] <<< [apiv2][status] POST https://auth.firebase.tools/attest 200
+[debug] [2025-11-27T07:12:37.480Z] <<< [apiv2][body] POST https://auth.firebase.tools/attest {"token":"mHCpwRTPih7Dj11ZKmzLmMEAumuyJmq6hEKXJlP4158"}
+[info] 
+[info] To sign in to the Firebase CLI:
+[info] 
+[info] 1. Take note of your session ID:
+[info] 
+[info]    3BE10
+[info] 
+[info] 2. Visit the URL below on any device and follow the instructions to get your code:
+[info] 
+[info]    https://auth.firebase.tools/login?code_challenge=q8nkZnl7Vprj29nsgN7jzfpvM6t_UdhLbEyqF3AaRNA&session=3be109de-d110-461a-b2ae-b8a341ebd041&attest=mHCpwRTPih7Dj11ZKmzLmMEAumuyJmq6hEKXJlP4158
+[info] 
+[info] 3. Paste or enter the authorization code below once you have it:
+[info] 
